@@ -1,0 +1,129 @@
+Nivel de Madurez 1
+Nivel Arquitectónico: Configuración 
+CONF.1	¿Tiene esta organización definidos sus objetivos estratégicos o sus objetivos de negocio? ¿Tienen en cuenta la importancia del Knowledge Management?
+
+CONF.2	¿Qué proceso o servicio quiere mejorar?
+
+CONF.3	¿Tiene usted identificados y clasificados los activos del proceso o servicio? ¿Los tiene alineados con los objetivos de proceso, de negocio o estratégicos de su organización?
+
+CONF.4	¿Para esta organización, y concretamente para el proceso o servicio identificado, tiene algún mecanismo que sirva para crear activos de conocimiento?
+
+CONF.5	¿Tiene esta organización, y concretamente para el proceso o servicio identificado, un repositorio de conocimiento? ¿Está éste organizado y tiene reglas establecidas para su uso?
+
+CONF.6	¿Para esta organización y concretamente para el proceso o servicio identificado, tiene identificadas las redes de comunicación formales e informales?
+
+CONF.7	¿La compañía tiene presente que debe contar con un mecanismo para clasificar sus activos de conocimiento, de cara al etiquetado para su posterior reutilización por los miembros de la organización?
+
+Nivel Arquitectónico: Formativo
+FROM.1	¿Tiene algún mecanismo para saber lo que saben sus compañeros? ¿Cuáles?
+
+FROM.2	Cuando un empleado toma un curso de formación, ¿es consciente de que la compañía está al tanto de su progreso? ¿Se valora positiva o negativamente que una persona inicie y finalice un curso con éxito?
+
+Nivel Arquitectónico: Operativo
+OPER.1	 Cuando está inmerso en el día a día de su actividad laboral, concretamente para el proceso o servicio identificado ¿tiene la posibilidad de utilizar el conocimiento y experiencia previa que se ha venido acumulando con anterioridad en la organización al respecto de dicho proceso? ¿Cómo?
+
+Nivel Arquitectónico: Proactivo
+PRO.1	Cuando comparte conocimiento con sus compañeros, ¿siente que esto se valora de alguna manera?
+
+PRO.2	Si hay modificación o actualización de algún recurso que puede ser de su interés, ¿se reciben las notificaciones pertenecientes?
+
+Nivel Arquitectónico: Valoración SP3
+VAL.1	A nivel personal, ¿recibe algún tipo de informe por parte de la organización para la que trabaja, en el que se le comunique anualmente cuál ha sido su aportación a nivel de conocimiento organizativo en relación con el proceso o servicio inicialmente identificado? 
+
+VAL.2	¿Se ha realizado a esta organización alguna auditoría para conocer la madurez del gobierno del conocimiento de su organización, y para conocer el valor que sus activos intangibles de proceso aportan a su organización? Si lo ha realizado, ¿se ha definido un plan de mejora sobre las capacidades de gobierno del conocimiento y los activos intangibles de proceso?
+
+VAL.3	Cuando usted utiliza un activo de conocimiento creado por otra persona, ¿tiene la posibilidad de dar su opinión sobre qué le ha aportado su uso?
+
+VAL.4	¿Su organización tiene un mecanismo de valoración del capital intelectual humano?
+
+Nivel Arquitectónico: Social
+SOCI.1	Cuando quiere compartir algo con la compañía o con sus compañeros, ¿tiene algún mecanismo para hacerlo? ¿Cuál?
+ 
+Nivel Arquitectónico: Memoria transaccional 
+MEMO.1	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita crear, almacenar conocimiento que se haya generado de manera individual, para su posterior recuperación?
+
+MEMO.2	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita dar una valoración al conocimiento que se haya generado de manera individual?
+
+MEMO.3	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita observar el crecimiento, o simplemente, el movimiento de las aportaciones individuales de conocimiento?
+
+Nivel de Madurez 2
+Nivel Arquitectónico: Configuración 
+CONF.8	¿Existe algún mecanismo en su organización y concretamente para el proceso/servicio identificado que le sirva para crear conocimiento o compartirlo con sus compañeros de forma colectiva? Por ejemplo, conformando equipos.
+
+Nivel Arquitectónico: Formativo 
+FORM.3	¿Existen en esta organización y concretamente para el proceso/servicio identificado, mecanismos que sirvan para rastrear cómo un grupo de personas están realizando un curso de formación?
+
+FORM.4	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que esté orientado a la definición de cursos o sesiones de formación colectiva en los casos en los que un grupo de personas requieran del mismo tipo de conocimiento?
+
+Nivel Arquitectónico: Proactivo 
+PRO.3	¿Existe en esta organización, y para el proceso o servicio identificado, algún mecanismo que permita avisar, sin que uno lo haya solicitado, sobre el uso que se está dando y la valoración que los compañeros dan a un conocimiento concreto que un empleado ha compartido?
+
+Nivel Arquitectónico: Valoración SP3
+VAL.5	¿Existe en esta organización y concretamente para el proceso o servicio identificado, algún mecanismo que permita que la capacidad de transferencia de un empleado sea valorada por sus superiores, sus iguales, y sus subordinados?
+
+VAL.6	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita valorar el capital tecnológico de la organización?
+
+Nivel Arquitectónico: Social
+SOCI.2	¿Existe en esta organización, y concretamente, para el proceso o servicio identificado, algún mecanismo que permita crear algún tipo de comunidad que sea impulsora de la creación de relaciones sociales entre los empleados que se usen para afianzar vínculos en base a intereses comunes?
+
+Nivel Arquitectónico: Memoria Transaccional
+MEMO.4	¿Existe en esta organización, y concretamente para el proceso/servicio identificado, algún mecanismo que permita crear y almacenar (repositorio), para su posterior recuperación, conocimiento que se haya generado de manera grupal? 
+
+MEMO.5	¿Existe en esta organización, y concretamente para el proceso/servicio identificado, algún mecanismo que permita dar una valoración al conocimiento que se haya generado de manera grupal?
+
+MEMO.6	¿Existe en esta organización, y concretamente para el proceso/servicio identificado, algún mecanismo que permita observar el crecimiento, o simplemente el movimiento de las aportaciones grupales de conocimiento?
+
+Nivel de Madurez 3
+Nivel Arquitectónico: Configuración 
+CONF.9	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita recoger indicadores que reflejen la calidad de un determinado producto o servicio asignado a usted, cada vez que trabaja o termina con el mismo?  
+
+CONF.10	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, alguna estrategia que apueste por la mejora de los procesos o servicios a través de la gestión del conocimiento?
+
+CONF.12 ¿Existe en esta organización y concretamente para el proceso o servicio identificado algún mecanismo que sirva para retroalimentar los activos de conocimiento una vez que son usados por alguien?
+
+Nivel Arquitectónico: Formativo 
+FORM.5	¿Existe en esta organización un grupo de personas encargadas, dependientes y soportadas directamente por la alta dirección de la compañía, encargadas de velar y transmitir la importancia del gobierno del conocimiento organizativo, así como los objetivos que se están alcanzando gracias a dicho gobierno?
+
+FORM.6	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita identificar casos de proyectos desarrollados dentro de esta organización, que por su naturaleza sean merecedores de ser incorporados como casos de estudio en los cursos de formación?
+
+Nivel Arquitectónico: Proactivo 
+PRO.4	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual las personas que actúan como Coach en relación a promover la gestión del conocimiento, sean notificadas de la valoración que se hace de ellos en relación a este rol dentro de la compañía?
+
+Nivel Arquitectónico: Valoración SP3 
+VAL.7	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita valorar el capital estructural de la organización?
+
+VAL.8	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita valorar el capital relacional de la organización?
+
+VAL.9	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita que permita valorar el capital de negocio de la organización?
+
+Nivel Arquitectónico: Social 
+SOCI.3	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual se reconozca a los miembros de la organización la aportación de conocimiento que han hecho a la organización, o concretamente al proceso o servicio específico?
+
+SOCI.4	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual se reconozca a los clientes o colaboradores externos de la organización la aportación de conocimiento que han hecho a la organización para un determinado proceso o servicio?
+
+Nivel de Madurez 4
+Nivel Arquitectónico: Configuración 
+CONF.11	¿Tiene la organización para el proceso o servicio identificado, un procedimiento para definir perfiles profesiográficos? (Profesiongrama: documento técnico en el que se describe con detalle las funciones, tareas y actividades de un puesto de trabajo. También contempla la descripción de las destrezas y habilidades del empleado idóneo para ocupar el puesto).
+Nivel Arquitectónico: Formativo 
+FORM.7	¿Tiene la organización para el proceso o servicio identificado, una estrategia de formación inteligente?
+
+Nivel Arquitectónico: Proactivo 
+PRO.5	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual un jefe pueda recibir periódicamente información relevante de otros proyectos o servicios similares a los que tiene en marcha, que le permitan aprovechar el conocimiento que se está generando en la organización?
+
+PRO.6	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual cualquier empleado reciba periódicamente conocimiento que se ha generado en el seno de la organización y que pudiera ser útil para su crecimiento profesional, y que le sea nutritivo por el perfil o puesto que ocupa dentro de la organización?
+
+PRO.7	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual cualquier empleado reciba periódicamente conocimiento que se ha generado en el seno de la organización y que pudiera ser útil en sus tareas cotidianas?
+
+PRO.8	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual cualquier empleado reciba periódicamente conocimiento que se ha generado en el seno de la compañía y que pudiera ser útil para tomar decisiones en torno a un tema determinado?
+
+Nivel Arquitectónico: Valoración SP3 
+VAL.10	¿Tiene la organización para el proceso o servicio identificado, un procedimiento de valoración de las relaciones sociales transversales?  (¿Existen mecanismos como el cuestionario 360º?)
+
+VAL.11	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual se pueda valorar el capital intelectual de la organización?
+
+Nivel Arquitectónico: Social 
+SOCI.5	¿Existe en esta organización, y para el proceso o servicio identificado, algún mecanismo mediante el cual se puedan crear redes entre personas que no pertenecen al mismo área o departamento?
+
+Nivel Arquitectónico: Memoria Transaccional
+MEMO.7	¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita recuperar y difundir apropiadamente conocimiento de interés para distintas personas que utilicen el proceso o servicio?  
+

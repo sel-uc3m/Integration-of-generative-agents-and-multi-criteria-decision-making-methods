@@ -1,0 +1,48 @@
+@startuml
+skinparam backgroundColor transparent
+skinparam SequenceMessageAlign center
+
+actor "Stakeholder\n(Usuario)" as S #E8F8F5
+participant "Interfaz\n(UI/Web)" as I #E8F8F5
+participant "Motor del Grafo\n(LangGraph Engine)" as Grafo #EAF2FF
+participant "Nodo Activo\n(del Grafo)" as Nodo #EAF2FF
+participant "Capa de Abstracción LLM\n(Módulo de Inferencia)" as Capa #FFFDE7
+participant "Proveedor LLM\n(API Externa)" as LLM #F4ECF7
+
+== 1. Turno Conversacional ==
+S -> I : Introduce mensaje / respuesta
+I -> Grafo : Envía entrada del usuario
+Grafo -> Nodo : Despacha nodo activo con GraphState
+activate Nodo
+
+== 2. Inferencia y Pipeline Estructurado ==
+Nodo -> Capa : Invoca operación especializada\n(clasificación, evaluación o síntesis)
+activate Capa
+
+Capa -> Capa : 1. Construye Prompt\n(Inyecta contexto, historial y base de conocimiento)
+
+loop Hasta validación exitosa o límite de reintentos
+    Capa -> LLM : 2. Envía petición con restricciones de esquema
+    activate LLM
+    LLM --> Capa : Devuelve respuesta (JSON)
+    deactivate LLM
+
+    Capa -> Capa : 3. Valida formato frente al esquema esperado
+    
+    alt 4a. Formato no conforme (Error de esquema)
+        Capa -> Capa : Inyecta mensaje de error para autocorrección
+    else 4b. Formato válido
+        Capa -> Capa : Parsea a estructura de datos tipada
+    end
+end
+
+Capa --> Nodo : Devuelve resultado estructurado y validado
+deactivate Capa
+
+== 3. Transición de Estado y Respuesta ==
+Nodo --> Grafo : Retorna actualización de estado (GraphState)
+deactivate Nodo
+Grafo -> Grafo : Evalúa aristas condicionales y avanza de estado
+Grafo -> I : Envía siguiente intervención
+I -> S : Muestra siguiente pregunta o aclaración
+@enduml

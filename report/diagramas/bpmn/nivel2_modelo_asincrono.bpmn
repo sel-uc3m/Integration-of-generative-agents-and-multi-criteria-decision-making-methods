@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="nivel2_modelo_asincrono" targetNamespace="http://tfm.adrian/nivel2" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.22.0">
+  <collaboration id="Collaboration_2">
+    <participant id="Pool_SesionEntrevista" name="Sesión de Entrevista" processRef="Process_SesionEntrevista" />
+    <participant id="Pool_Ingeniero" name="Ingeniero de Software" processRef="Process_Ingeniero" />
+    <participant id="Pool_Algoritmos" name="- Sistema -&#10;Procesamiento" processRef="Process_Algoritmos" />
+    <messageFlow id="Flow_0vkvq6d" name="Resultados" sourceRef="Task_Resultados" targetRef="Activity_0tbpjeb" />
+  </collaboration>
+  <process id="Process_SesionEntrevista" isExecutable="false">
+    <laneSet id="LaneSet_Sesion">
+      <lane id="Lane_AgenteIA" name="- Sistema -&#10; Recolección">
+        <flowNodeRef>Task_Persiste</flowNodeRef>
+        <flowNodeRef>Task_Entrevista</flowNodeRef>
+        <flowNodeRef>Gateway_Loop</flowNodeRef>
+      </lane>
+      <lane id="Lane_Stakeholder" name="Stakeholder">
+        <flowNodeRef>End_S</flowNodeRef>
+        <flowNodeRef>Activity_0tbpjeb</flowNodeRef>
+        <flowNodeRef>Task_Responde</flowNodeRef>
+        <flowNodeRef>Task_IniciarSesion</flowNodeRef>
+        <flowNodeRef>Start_S</flowNodeRef>
+      </lane>
+    </laneSet>
+    <dataObjectReference id="DataObjectReference_1dcowlj" name="variables.json" dataObjectRef="DataObject_1v65wls" />
+    <dataObject id="DataObject_1v65wls" />
+    <dataObjectReference id="DataObjectReference_0a28n3n" name="output.json" dataObjectRef="DataObject_0x2yrny" />
+    <dataObject id="DataObject_0x2yrny" />
+    <endEvent id="End_S" name="Fin sesión entrevista">
+      <incoming>Flow_06unknn</incoming>
+    </endEvent>
+    <task id="Activity_0tbpjeb" name="Observar resultados">
+      <incoming>sf_persiste_to_observa</incoming>
+      <outgoing>Flow_06unknn</outgoing>
+    </task>
+    <task id="Task_Persiste" name="Persistir resultado&#10;en ficheros">
+      <incoming>sf_loop_no</incoming>
+      <outgoing>sf_persiste_to_observa</outgoing>
+      <dataOutputAssociation id="DataOutputAssociation_101tgwf">
+        <targetRef>DataObjectReference_1dcowlj</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation id="DataOutputAssociation_1l00fw6">
+        <targetRef>DataObjectReference_0a28n3n</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <task id="Task_Responde" name="Responder preguntas&#10;de la entrevista">
+      <incoming>sf_agent_to_responde</incoming>
+      <outgoing>sf_responde_to_gateway</outgoing>
+    </task>
+    <task id="Task_Entrevista" name="Conducir entrevista&#10;(preguntas y aclaraciones)">
+      <incoming>sf_s_to_agent</incoming>
+      <incoming>sf_loop_yes</incoming>
+      <outgoing>sf_agent_to_responde</outgoing>
+    </task>
+    <exclusiveGateway id="Gateway_Loop" name="¿Quedan preguntas?">
+      <incoming>sf_responde_to_gateway</incoming>
+      <outgoing>sf_loop_yes</outgoing>
+      <outgoing>sf_loop_no</outgoing>
+    </exclusiveGateway>
+    <task id="Task_IniciarSesion" name="Iniciar sesión&#10;de entrevista">
+      <incoming>sf_s1</incoming>
+      <outgoing>sf_s_to_agent</outgoing>
+    </task>
+    <startEvent id="Start_S" name="Inicio entrevista" />
+    <sequenceFlow id="Flow_06unknn" sourceRef="Activity_0tbpjeb" targetRef="End_S" />
+    <sequenceFlow id="sf_persiste_to_observa" sourceRef="Task_Persiste" targetRef="Activity_0tbpjeb" />
+    <sequenceFlow id="sf_loop_no" name="No" sourceRef="Gateway_Loop" targetRef="Task_Persiste" />
+    <sequenceFlow id="sf_agent_to_responde" sourceRef="Task_Entrevista" targetRef="Task_Responde" />
+    <sequenceFlow id="sf_responde_to_gateway" sourceRef="Task_Responde" targetRef="Gateway_Loop" />
+    <sequenceFlow id="sf_s_to_agent" sourceRef="Task_IniciarSesion" targetRef="Task_Entrevista" />
+    <sequenceFlow id="sf_loop_yes" name="Sí" sourceRef="Gateway_Loop" targetRef="Task_Entrevista" />
+    <sequenceFlow id="sf_s1" sourceRef="Start_S" targetRef="Task_IniciarSesion" />
+  </process>
+  <process id="Process_Ingeniero" isExecutable="false">
+    <startEvent id="Start_I" name="Disponible" />
+    <task id="Task_Audita" name="Auditar calidad&#10;de la entrevista">
+      <property id="Property_0qkctsc" name="__targetRef_placeholder" />
+      <dataInputAssociation id="DataInputAssociation_008h6bd">
+        <sourceRef>DataObjectReference_1dcowlj</sourceRef>
+        <targetRef>Property_0qkctsc</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation id="DataInputAssociation_1vq0r47">
+        <sourceRef>DataObjectReference_0a28n3n</sourceRef>
+        <targetRef>Property_0qkctsc</targetRef>
+      </dataInputAssociation>
+      <dataOutputAssociation id="DataOutputAssociation_0h8cisy">
+        <targetRef>DataObjectReference_1dcowlj</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <endEvent id="End_I" name="Validado" />
+    <sequenceFlow id="sf_i1" sourceRef="Start_I" targetRef="Task_Audita" />
+    <sequenceFlow id="sf_i2" sourceRef="Task_Audita" targetRef="End_I" />
+  </process>
+  <process id="Process_Algoritmos" isExecutable="false">
+    <startEvent id="Start_Alg" name="Datos disponibles" />
+    <task id="Task_Procesa" name="Procesar variables&#10;(ALTUS / SIPAC / AHP)">
+      <property id="Property_0o9sxf5" name="__targetRef_placeholder" />
+      <dataInputAssociation id="DataInputAssociation_04ge4gf">
+        <sourceRef>DataObjectReference_1dcowlj</sourceRef>
+        <targetRef>Property_0o9sxf5</targetRef>
+      </dataInputAssociation>
+    </task>
+    <task id="Task_Resultados" name="Generar Resultados" />
+    <endEvent id="End_Alg" name="Resultados listos" />
+    <sequenceFlow id="sf_alg1" sourceRef="Start_Alg" targetRef="Task_Procesa" />
+    <sequenceFlow id="sf_alg2" sourceRef="Task_Procesa" targetRef="Task_Resultados" />
+    <sequenceFlow id="sf_alg3" sourceRef="Task_Resultados" targetRef="End_Alg" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_2">
+    <bpmndi:BPMNPlane id="BPMNPlane_2" bpmnElement="Collaboration_2">
+      <bpmndi:BPMNShape id="Shape_Pool_Sesion" bpmnElement="Pool_SesionEntrevista" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="970" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteIA" bpmnElement="Lane_AgenteIA" isHorizontal="true">
+        <dc:Bounds x="50" y="140" width="940" height="130" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Stakeholder" bpmnElement="Lane_Stakeholder" isHorizontal="true">
+        <dc:Bounds x="50" y="20" width="940" height="120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1dcowlj_di" bpmnElement="DataObjectReference_1dcowlj">
+        <dc:Bounds x="370" y="295" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="292" y="313" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0a28n3n_di" bpmnElement="DataObjectReference_0a28n3n">
+        <dc:Bounds x="602" y="295" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="643" y="313" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_S" bpmnElement="End_S">
+        <dc:Bounds x="932" y="62" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="925" y="98" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Observa" bpmnElement="Activity_0tbpjeb">
+        <dc:Bounds x="765" y="50" width="130" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Persiste" bpmnElement="Task_Persiste">
+        <dc:Bounds x="600" y="170" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Responde" bpmnElement="Task_Responde">
+        <dc:Bounds x="313" y="50" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Entrevista" bpmnElement="Task_Entrevista">
+        <dc:Bounds x="313" y="170" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Loop" bpmnElement="Gateway_Loop" isMarkerVisible="true">
+        <dc:Bounds x="510" y="180" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="502" y="230" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_IniciarSesion" bpmnElement="Task_IniciarSesion">
+        <dc:Bounds x="170" y="50" width="120" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_S" bpmnElement="Start_S">
+        <dc:Bounds x="102" y="62" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="82" y="98" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_s1" bpmnElement="sf_s1">
+        <di:waypoint x="138" y="80" />
+        <di:waypoint x="170" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_s_to_agent" bpmnElement="sf_s_to_agent">
+        <di:waypoint x="230" y="110" />
+        <di:waypoint x="230" y="200" />
+        <di:waypoint x="313" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_agent_to_responde" bpmnElement="sf_agent_to_responde">
+        <di:waypoint x="388" y="170" />
+        <di:waypoint x="388" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_responde_to_gateway" bpmnElement="sf_responde_to_gateway">
+        <di:waypoint x="463" y="80" />
+        <di:waypoint x="530" y="80" />
+        <di:waypoint x="530" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_loop_yes" bpmnElement="sf_loop_yes">
+        <di:waypoint x="510" y="200" />
+        <di:waypoint x="463" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="205" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_loop_no" bpmnElement="sf_loop_no">
+        <di:waypoint x="550" y="200" />
+        <di:waypoint x="600" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="569" y="182" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_persiste_to_observa" bpmnElement="sf_persiste_to_observa">
+        <di:waypoint x="670" y="170" />
+        <di:waypoint x="670" y="80" />
+        <di:waypoint x="765" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_observa_to_end" bpmnElement="Flow_06unknn">
+        <di:waypoint x="895" y="80" />
+        <di:waypoint x="932" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Pool_I" bpmnElement="Pool_Ingeniero" isHorizontal="true">
+        <dc:Bounds x="20" y="390" width="970" height="100" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_I" bpmnElement="Start_I">
+        <dc:Bounds x="80" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="72" y="458" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Audita" bpmnElement="Task_Audita">
+        <dc:Bounds x="320" y="410" width="160" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_I" bpmnElement="End_I">
+        <dc:Bounds x="892" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="889" y="458" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_i1" bpmnElement="sf_i1">
+        <di:waypoint x="116" y="440" />
+        <di:waypoint x="320" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_i2" bpmnElement="sf_i2">
+        <di:waypoint x="480" y="440" />
+        <di:waypoint x="892" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Pool_Alg" bpmnElement="Pool_Algoritmos" isHorizontal="true">
+        <dc:Bounds x="20" y="520" width="970" height="100" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Alg" bpmnElement="Start_Alg">
+        <dc:Bounds x="80" y="552" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="55" y="588" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Procesa" bpmnElement="Task_Procesa">
+        <dc:Bounds x="160" y="540" width="180" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Resultados" bpmnElement="Task_Resultados">
+        <dc:Bounds x="540" y="540" width="160" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Alg" bpmnElement="End_Alg">
+        <dc:Bounds x="892" y="552" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="868" y="588" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_alg1" bpmnElement="sf_alg1">
+        <di:waypoint x="116" y="570" />
+        <di:waypoint x="160" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_alg2" bpmnElement="sf_alg2">
+        <di:waypoint x="340" y="570" />
+        <di:waypoint x="540" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_alg3" bpmnElement="sf_alg3">
+        <di:waypoint x="700" y="570" />
+        <di:waypoint x="892" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_101tgwf_di" bpmnElement="DataOutputAssociation_101tgwf">
+        <di:waypoint x="647" y="230" />
+        <di:waypoint x="620" y="265" />
+        <di:waypoint x="388" y="265" />
+        <di:waypoint x="388" y="295" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1l00fw6_di" bpmnElement="DataOutputAssociation_1l00fw6">
+        <di:waypoint x="658" y="230" />
+        <di:waypoint x="630" y="295" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_008h6bd_di" bpmnElement="DataInputAssociation_008h6bd">
+        <di:waypoint x="388" y="345" />
+        <di:waypoint x="388" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1vq0r47_di" bpmnElement="DataInputAssociation_1vq0r47">
+        <di:waypoint x="620" y="345" />
+        <di:waypoint x="620" y="380" />
+        <di:waypoint x="450" y="380" />
+        <di:waypoint x="450" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_04ge4gf_di" bpmnElement="DataInputAssociation_04ge4gf">
+        <di:waypoint x="370" y="345" />
+        <di:waypoint x="370" y="380" />
+        <di:waypoint x="250" y="380" />
+        <di:waypoint x="250" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vkvq6d_di" bpmnElement="Flow_0vkvq6d">
+        <di:waypoint x="640" y="540" />
+        <di:waypoint x="640" y="500" />
+        <di:waypoint x="830" y="500" />
+        <di:waypoint x="830" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="708" y="503" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0h8cisy_di" bpmnElement="DataOutputAssociation_0h8cisy">
+        <di:waypoint x="388" y="410" />
+        <di:waypoint x="388" y="345" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

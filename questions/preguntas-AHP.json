@@ -1,0 +1,59 @@
+{
+  "session_id": "AHP_PRIORITIZATION",
+  "profile": {
+    "processName": "AHP",
+    "systemPrompt": "Eres un consultor experto en AHP (Proceso de Jerarquía Analítica) y priorización de proyectos digitales. Tu objetivo es ayudar a la empresa a seleccionar y priorizar las propuestas de digitalización generadas en la fase SIPAC. Te basarás estrictamente en el contexto y los datos obtenidos de los outputs anteriores.",
+    "generateTaskSummaries": false,
+    "knowledgeBase": ""
+  },
+  "tasks": [
+    {
+      "id": "AHP_EVALUATION",
+      "name": "Evaluación AHP",
+      "description": "Priorización AHP de propuestas de digitalización",
+      "actions": [
+        {
+          "id": "STEP_0_CONTEXT_SUMMARY",
+          "type": "internal",
+          "content": "Resumen interno del contexto SIPAC",
+          "instruction": "Se te provee el contexto estructural de la fase SIPAC: {sipac_final_output}. Además, tienes los resúmenes cualitativos previos: {previous_processes_summary}. Analiza toda esta información. Extrae: 1) Los objetivos de negocio, 2) Los requisitos y dolores del cliente, 3) La lista plana de todos los artefactos propuestos, incluyendo su V (Gap Calidad), W (Gap Impacto) y su Importancia. Resúmelo internamente en texto claro para tenerlo como contexto en los siguientes pasos.",
+          "outputVar": "ahp_context_summary"
+        },
+        {
+          "id": "STEP_1_PROPOSE_CRITERIA",
+          "type": "internal",
+          "content": "Propuesta de criterios de evaluación",
+          "instruction": "Basándote en este contexto: {ahp_context_summary}, deduce y propone 3 o 4 criterios de evaluación relevantes para realizar un análisis AHP que priorice los artefactos. \nEjemplos típicos: Coste de implementación, Viabilidad técnica, Impacto en objetivos estratégicos, Tiempo de despliegue.\nDevuelve un JSON estrictamente con la siguiente estructura:\n{\n  \"criterios_sugeridos\": [\n    { \"nombre\": \"Nombre Criterio\", \"descripcion\": \"Por qué aplica a esta empresa\" }\n  ]\n}",
+          "outputVar": "ahp_suggested_criteria"
+        },
+        {
+          "id": "STEP_2_CONFIRM_CRITERIA",
+          "type": "question",
+          "content": "Aquí están los criterios de evaluación sugeridos para priorizar las propuestas:\n{ahp_suggested_criteria}\n\n¿Estás de acuerdo con usar estos criterios para el modelo matemático AHP, o quieres modificar/añadir alguno?",
+          "outputVar": "ahp_user_criteria_feedback"
+        },
+        {
+          "id": "STEP_3_CONSOLIDATE_CRITERIA",
+          "type": "internal",
+          "content": "Consolidación de criterios",
+          "instruction": "El usuario ha respondido: {ahp_user_criteria_feedback}. Ajusta los criterios sugeridos ({ahp_suggested_criteria}) según el feedback.\nDevuelve un JSON estricto:\n{\n  \"criterios_finales\": [\n    \"Criterio 1\", \"Criterio 2\", \"Criterio 3\"\n  ]\n}",
+          "outputVar": "ahp_final_criteria"
+        },
+        {
+          "id": "STEP_4_CRITERIA_COMPARISON",
+          "type": "internal",
+          "content": "Comparación por pares de criterios",
+          "instruction": "Con los criterios finales: {ahp_final_criteria}. Eres un consultor. Compara cada posible PAR de criterios entre sí usando la escala Saaty (1=Igual, 3=Moderado, 5=Fuerte, 7=Muy fuerte, 9=Extremo). Compara cada par UNA SOLA VEZ. Usa el contexto de la empresa ({ahp_context_summary}) para decidir.\nDevuelve un JSON estricto con esta estructura:\n{\n  \"comparaciones_criterios\": [\n    {\n      \"item_a\": \"Nombre Criterio 1\",\n      \"item_b\": \"Nombre Criterio 2\",\n      \"ganador\": \"Nombre del Criterio que gana\" (O 'Empate' si es 1),\n      \"peso_saaty\": 5,\n      \"justificacion\": \"Breve motivo\"\n    }\n  ]\n}",
+          "outputVar": "ahp_criteria_comparisons"
+        },
+        {
+          "id": "STEP_5_ALTERNATIVES_COMPARISON",
+          "type": "internal",
+          "content": "Comparación por pares de alternativas por criterio",
+          "instruction": "Tenemos la lista de artefactos: {ahp_context_summary} y los criterios: {ahp_final_criteria}.\nPara CADA criterio, debes comparar CADA PAR de artefactos entre sí usando la escala Saaty (1-9). Compara cada par UNA SOLA VEZ por criterio. Sé breve, NO justifiques la respuesta para ahorrar tokens.\nDevuelve un JSON estricto con esta estructura:\n{\n  \"matrices_alternativas\": [\n    {\n      \"criterio\": \"Nombre del Criterio\",\n      \"comparaciones\": [\n        {\n          \"item_a\": \"Artefacto 1\",\n          \"item_b\": \"Artefacto 2\",\n          \"ganador\": \"Artefacto 1\" (O 'Empate'),\n          \"peso_saaty\": 3\n        }\n      ]\n    }\n  ]\n}",
+          "outputVar": "ahp_alternatives_comparisons"
+        }
+      ]
+    }
+  ]
+}

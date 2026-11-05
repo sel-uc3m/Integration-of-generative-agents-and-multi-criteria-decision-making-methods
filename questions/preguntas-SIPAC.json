@@ -1,0 +1,746 @@
+{
+  "session_id": "SIPAC_FULL_COMPLIANCE",
+  "profile": {
+    "processName": "SIPAC",
+    "allowFollowUps": false,
+    "allowDoubtConfirmation": false,
+    "allowKnowledgeConsultation": true,
+    "generateTaskSummaries": true,
+    "saveTaskSummariesToOutput": true,
+    "systemPrompt": "You are a strategic consultant expert in the SIPAC methodology.\nYour goal is to perform internal reasoning to help value intangible assets.\n\nCRITICAL RULE: Return ONLY a valid JSON object or array as requested. No conversational text.",
+    "knowledgeBase": [
+      {
+        "name": "GIA Catalog",
+        "path": "../knowledge_base/catalogo_gia.md"
+      },
+      {
+        "name": "GIA to Intellectual Capital Mapping",
+        "path": "../knowledge_base/mapeo_gia_ci.json"
+      },
+      {
+        "name": "Artifact Identification Rules",
+        "path": "../knowledge_base/doc_artifacts.md"
+      },
+      {
+        "name": "Intellectus Model Taxonomy",
+        "path": "../knowledge_base/modelo_intellectus.md"
+      }
+    ],
+    "hooks": {}
+  },
+  "tasks": [
+    {
+      "id": "SIPAC_FULL_COMPLIANCE",
+      "name": "SIPAC Process - SIPAC_FULL_COMPLIANCE",
+      "actions": [
+        {
+          "id": "STEP_0_EMPRESA",
+          "type": "question",
+          "content": "Para contextualizar la valoración estratégica, ¿cuál es el nombre, descripción y misión principal de tu empresa?",
+          "outputVar": "datos_empresa"
+        },
+        {
+          "id": "STEP_1_OBJETIVOS",
+          "type": "question",
+          "content": "Para comenzar con la valoración estratégica (Metodología SIPAC), ¿cuáles son los objetivos de negocio de tu empresa que deseas mejorar o de los que quieres obtener mayor beneficio?",
+          "outputVar": "objetivos_negocio"
+        },
+        {
+          "id": "STEP_2_REQUISITOS",
+          "type": "question",
+          "content": "Pensando en esos objetivos, ¿cuáles son los 'requisitos de negocio' específicos que se deben cumplir ineludiblemente para alcanzarlos?",
+          "outputVar": "requisitos_negocio"
+        },
+        {
+          "id": "STEP_3_PROCESOS",
+          "type": "question",
+          "content": "Teniendo claros los objetivos y requisitos, ¿cuáles son los procesos organizacionales (ya existentes o que planeéis implementar) que os ayudarán a conseguirlos?",
+          "outputVar": "procesos_organizacionales"
+        },
+        {
+          "id": "STEP_4_GIAS_INTERNAL",
+          "type": "internal",
+          "content": "Identificación de Activos Genéricos (GIA) y Específicos basados en la taxonomía SIPAC.",
+          "instruction": "A partir de '{procesos_organizacionales}' y como contexto '{requisitos_negocio}' y '{objetivos_negocio}', deduce los posibles Tipos Genéricos de Activo Intangible usando estrictamente la lista SIPAC (GIA 1 al 11). CRÍTICO: Debes identificar CADA UNO de los procesos individuales mencionados ÚNICAMENTE en '{procesos_organizacionales}'. Propón SIEMPRE AL MENOS UN activo intangible específico por cada proceso. Devuelve DIRECTAMENTE un ARRAY JSON jerárquico donde cada elemento sea un objeto con las claves: 'objetivo_negocio', 'requisito_negocio' y 'procesos' (array de objetos con 'proceso' y 'activos', conteniendo 'gia_tipo' y 'activo_especifico').",
+          "outputVar": "activos_propuestos",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "id": "STEP_5_VALIDAR_ACTIVOS_IMPORTANCIA",
+          "type": "question",
+          "content": "A partir de los procesos identificados, se han deducido los siguientes activos intangibles propuestos:\n\n{activos_propuestos}\n\nPor favor, confirma la lista, añade si falta algún activo importante en tu día a día y asigna a cada uno una IMPORTANCIA del 1 (mínima) al 5 (máxima) para conseguir tu objetivo de negocio.",
+          "outputVar": "texto_importancia_usuario"
+        },
+        {
+          "id": "STEP_5_1_CONSOLIDACION_INTERNAL",
+          "type": "internal",
+          "content": "Consolidación de activos confirmados por el usuario, deducción de GIA faltantes e importancias.",
+          "instruction": "Lee la respuesta del usuario en '{texto_importancia_usuario}' y crúzala con tu propuesta inicial en '{activos_propuestos}'. Identifica qué activos ha confirmado el usuario y cuáles nuevos ha añadido. Para los nuevos, deduce su 'gia_tipo'. Extrae la importancia (1-5) que les ha dado. CRÍTICO: Mantén la misma estructura jerárquica de '{activos_propuestos}'. Devuelve DIRECTAMENTE un ARRAY JSON jerárquico donde cada objeto contenga las claves obligatorias: 'objetivo_negocio', 'requisito_negocio' y 'procesos' (con 'proceso' y 'activos', añadiendo 'importancia_activo' numérica a cada activo).",
+          "outputVar": "activos_confirmados_importancia",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            },
+                            "importancia_activo": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico",
+                            "importancia_activo"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "id": "STEP_6_CI_ARTEFACTOS_INTERNAL",
+          "type": "internal",
+          "content": "Mapeo individual de Capital Intelectual y Artefactos por activo.",
+          "instruction": "A partir del JSON en '{activos_confirmados_importancia}', para cada activo específico clasifícalo en un tipo de Capital Intelectual ('intellectus_ci') según el modelo Intellectus. Además, sugiere uno o más artefactos materiales ('artefactos_propuestos' como array de strings) que soporten dicho activo (ej. CRM, Wiki, Web). Devuelve DIRECTAMENTE el ARRAY JSON jerárquico actualizado con estas dos nuevas claves en cada activo.",
+          "outputVar": "activos_ci_artefactos",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            },
+                            "importancia_activo": {
+                              "type": "number"
+                            },
+                            "intellectus_ci": {
+                              "type": "string"
+                            },
+                            "artefactos_propuestos": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico",
+                            "importancia_activo",
+                            "intellectus_ci",
+                            "artefactos_propuestos"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "id": "STEP_7_VALIDAR_ARTEFACTOS",
+          "type": "question",
+          "content": "Para materializar estos activos intangibles y alcanzar tus objetivos, el sistema sugiere implementar o potenciar los siguientes 'Artefactos' (herramientas, software o plataformas):\n\n{activos_ci_artefactos}\n\n¿Te parecen adecuadas estas propuestas? Si ya contáis con alguna herramienta similar que haga esta función, indícalo; de lo contrario, confirmaremos estas sugerencias como el objetivo tecnológico a conseguir.",
+          "outputVar": "texto_artefactos_usuario"
+        },
+        {
+          "id": "STEP_7_1_CONSOLIDACION_ARTEFACTOS",
+          "type": "internal",
+          "content": "Fijar el artefacto real confirmado por el usuario.",
+          "instruction": "Lee el JSON '{activos_ci_artefactos}' y la respuesta del usuario en '{texto_artefactos_usuario}'. Determina los 'artefactos' definitivos para cada activo. Transforma la clave 'artefactos_propuestos' (array de strings) en una nueva clave 'artefactos' (array de objetos, donde cada objeto tiene la clave 'artefacto' con el nombre de la herramienta). Elimina la clave 'artefactos_propuestos'. Devuelve DIRECTAMENTE el ARRAY JSON jerárquico actualizado.",
+          "outputVar": "activos_artefactos_final",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            },
+                            "importancia_activo": {
+                              "type": "number"
+                            },
+                            "intellectus_ci": {
+                              "type": "string"
+                            },
+                            "artefactos": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "artefacto": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "artefacto"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico",
+                            "importancia_activo",
+                            "intellectus_ci",
+                            "artefactos"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "id": "STEP_8_INDICADORES_INTERNAL",
+          "type": "internal",
+          "content": "Generación de Indicadores con sus parámetros matemáticos.",
+          "instruction": "Para cada artefacto en el JSON '{activos_artefactos_final}', propón los indicadores clave más representativos (típicamente de 1 a 3 por artefacto). Añade dentro de cada objeto de 'artefactos' un array 'indicadores', donde cada objeto tiene: 'nombre' (string), 'tipo' (1 para calidad, 2 para impacto), 'minimo' (número), 'maximo' (número, si es % será 100), y 'sentido' (1 si mayor es mejor, -1 si menor es mejor). Devuelve DIRECTAMENTE el ARRAY JSON jerárquico actualizado.",
+          "outputVar": "indicadores_propuestos",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            },
+                            "importancia_activo": {
+                              "type": "number"
+                            },
+                            "intellectus_ci": {
+                              "type": "string"
+                            },
+                            "artefactos": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "artefacto": {
+                                    "type": "string"
+                                  },
+                                  "indicadores": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "nombre": {
+                                          "type": "string"
+                                        },
+                                        "tipo": {
+                                          "type": "number"
+                                        },
+                                        "minimo": {
+                                          "type": "number"
+                                        },
+                                        "maximo": {
+                                          "type": "number"
+                                        },
+                                        "sentido": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "nombre",
+                                        "tipo",
+                                        "minimo",
+                                        "maximo",
+                                        "sentido"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "artefacto",
+                                  "indicadores"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico",
+                            "importancia_activo",
+                            "intellectus_ci",
+                            "artefactos"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "id": "STEP_9_MEDICION_EXACTA",
+          "type": "question",
+          "content": "Para evaluar tu solucion tecnologica, propongo los siguientes indicadores con sus escalas (mínimo y máximo):\n\n{indicadores_propuestos}\n\nBasándote en la realidad de tu empresa, ¿cuál es el 'Valor Actual' y cuál es tu 'Valor Meta' (objetivo) a alcanzar para cada uno de ellos?",
+          "outputVar": "texto_metricas_usuario"
+        },
+        {
+          "id": "STEP_10_CONSOLIDACION_FINAL",
+          "type": "internal",
+          "content": "Consolidar y validar las métricas indicadas por el usuario.",
+          "instruction": "Lee el JSON '{indicadores_propuestos}' y las respuestas del usuario en '{texto_metricas_usuario}'. Añade los campos numéricos 'actual' y 'meta' a cada objeto dentro de los arrays 'indicadores'. Devuelve DIRECTAMENTE el ARRAY JSON jerárquico definitivo.",
+          "outputVar": "sipac_pre_final_output",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            },
+                            "importancia_activo": {
+                              "type": "number"
+                            },
+                            "intellectus_ci": {
+                              "type": "string"
+                            },
+                            "artefactos": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "artefacto": {
+                                    "type": "string"
+                                  },
+                                  "indicadores": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "nombre": {
+                                          "type": "string"
+                                        },
+                                        "tipo": {
+                                          "type": "number"
+                                        },
+                                        "minimo": {
+                                          "type": "number"
+                                        },
+                                        "maximo": {
+                                          "type": "number"
+                                        },
+                                        "sentido": {
+                                          "type": "number"
+                                        },
+                                        "actual": {
+                                          "type": "number"
+                                        },
+                                        "meta": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "nombre",
+                                        "tipo",
+                                        "minimo",
+                                        "maximo",
+                                        "sentido",
+                                        "actual",
+                                        "meta"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "artefacto",
+                                  "indicadores"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico",
+                            "importancia_activo",
+                            "intellectus_ci",
+                            "artefactos"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        {
+          "id": "STEP_11_BMC_MAPPING_INTERNAL",
+          "type": "internal",
+          "content": "Asignación de Activos al Business Model Canvas (BMC)",
+          "instruction": "Lee el JSON '{sipac_pre_final_output}'. Para cada activo, deduce lógicamente en qué bloque del Business Model Canvas (Key Partners, Key Activities, Key Resources, Value Propositions, Customer Relationships, Channels, Customer Segments, Cost Structure, Revenue Streams) encaja mejor según su naturaleza y su proceso. Añade el campo string 'bmc_block' a cada objeto de activo. Devuelve DIRECTAMENTE el ARRAY JSON jerárquico definitivo.",
+          "outputVar": "sipac_final_output",
+          "outputSchema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "objetivo_negocio": {
+                  "type": "string"
+                },
+                "requisito_negocio": {
+                  "type": "string"
+                },
+                "procesos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "proceso": {
+                        "type": "string"
+                      },
+                      "activos": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "gia_tipo": {
+                              "type": "string"
+                            },
+                            "activo_especifico": {
+                              "type": "string"
+                            },
+                            "importancia_activo": {
+                              "type": "number"
+                            },
+                            "intellectus_ci": {
+                              "type": "string"
+                            },
+                            "artefactos": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "artefacto": {
+                                    "type": "string"
+                                  },
+                                  "indicadores": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "nombre": {
+                                          "type": "string"
+                                        },
+                                        "tipo": {
+                                          "type": "number"
+                                        },
+                                        "minimo": {
+                                          "type": "number"
+                                        },
+                                        "maximo": {
+                                          "type": "number"
+                                        },
+                                        "sentido": {
+                                          "type": "number"
+                                        },
+                                        "actual": {
+                                          "type": "number"
+                                        },
+                                        "meta": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "nombre",
+                                        "tipo",
+                                        "minimo",
+                                        "maximo",
+                                        "sentido",
+                                        "actual",
+                                        "meta"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "artefacto",
+                                  "indicadores"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "bmc_block": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "gia_tipo",
+                            "activo_especifico",
+                            "importancia_activo",
+                            "intellectus_ci",
+                            "artefactos",
+                            "bmc_block"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "proceso",
+                      "activos"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "objetivo_negocio",
+                "requisito_negocio",
+                "procesos"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

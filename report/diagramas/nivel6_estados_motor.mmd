@@ -1,0 +1,42 @@
+stateDiagram-v2
+    [*] --> taskLoader
+    
+    taskLoader --> extractAction : hasTask
+    taskLoader --> Cierre_de_tarea : empty
+    
+    extractAction --> desenrollar_bucle : loop_validation
+    desenrollar_bucle --> extractAction
+    
+    extractAction --> Camino_question : question
+    extractAction --> Camino_internal : internal
+    
+    state Camino_question {
+        questionManager --> doubtConfirmer : doubt
+        questionManager --> contextProcessor : response
+        doubtConfirmer --> knowledgeConsultant : con_aclaracion
+        doubtConfirmer --> contextProcessor : response_no_era_duda
+        knowledgeConsultant --> doubtConfirmer : doubt_confirmada
+        contextProcessor --> architect
+        architect --> questionManager : ask_follow_up
+    }
+    
+    state Camino_internal {
+        executeInternalAction
+    }
+    
+    Camino_question --> Cierre_de_accion : stop
+    Camino_internal --> Cierre_de_accion
+    
+    state Cierre_de_accion {
+        actionAnswerSummarizer --> executeActionHook
+        executeActionHook --> saveToOutput
+    }
+    
+    saveToOutput --> extractAction : hasAction
+    saveToOutput --> Cierre_de_tarea : empty
+    
+    state Cierre_de_tarea {
+        taskSummarizer --> executeTaskHook
+    }
+    
+    executeTaskHook --> taskLoader

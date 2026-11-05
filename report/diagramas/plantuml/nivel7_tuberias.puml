@@ -1,0 +1,52 @@
+@startuml
+left to right direction
+skinparam usecaseBackgroundColor White
+skinparam usecaseBorderColor Black
+
+database "variables_altus.json" as v_altus
+database "variables_sipac.json" as v_sipac
+database "variables_ahp.json" as v_ahp
+
+rectangle "Resultados" {
+  artifact "Perfil Madurez" as out_altus
+  artifact "Artefactos Propuestos" as out_sipac
+  artifact "Ranking priorizado" as out_ahp
+}
+
+package "Proceso ALTUS" {
+  usecase "1.1 Agrupar\ncapacidades" as a1
+  usecase "1.2 Clasificar\npuntuaciones" as a2
+  usecase "1.3 Calcular\nmedias" as a3
+}
+
+package "Proceso SIPAC" {
+  usecase "2.1 Parsear\nentrada" as s1
+  usecase "2.2 Normalizar" as s2
+  usecase "2.3 Calcular\nGap" as s3
+  usecase "2.4 Agregar\nScore" as s4
+}
+
+package "Proceso AHP" {
+  usecase "3.1 Construir\nmatrices" as h1
+  usecase "3.2 Calcular\nvector pesos" as h2
+  usecase "3.3 Verificar\nConsistencia" as h3
+  usecase "3.4 Suma\nponderada" as h4
+}
+
+v_altus --> a1
+a1 --> a2
+a2 --> a3
+a3 --> out_altus
+
+v_sipac --> s1
+s1 --> s2
+s2 --> s3
+s3 --> s4
+s4 --> out_sipac
+
+v_ahp --> h1
+h1 --> h2
+h2 --> h3
+h3 --> h4
+h4 --> out_ahp
+@enduml

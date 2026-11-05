@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://tfm.adrian/nivel5" id="nivel5_flujo_datos">
+
+  <collaboration id="Collaboration_5">
+    <participant id="Pool_Config" name="Configuración (Entrada)" processRef="Process_Config" />
+    <participant id="Pool_Motor" name="Motor (Runtime)" processRef="Process_Motor" />
+    <participant id="Pool_Salida" name="Persistencia (Salida)" processRef="Process_Salida" />
+    <participant id="Pool_Consumo" name="Consumidores" processRef="Process_Consumo" />
+
+    
+    </collaboration>
+
+  
+  <process id="Process_Config" isExecutable="false">
+    <startEvent id="Start_C" name="Inicio" />
+    <task id="Task_InitConfig" name="Cargar e Inicializar Configuración"><dataInputAssociation id="dia_config"><sourceRef>Ref_ConfigJson</sourceRef><targetRef>Task_InitConfig</targetRef></dataInputAssociation><dataInputAssociation id="dia_kb"><sourceRef>Ref_KB</sourceRef><targetRef>Task_InitConfig</targetRef></dataInputAssociation><dataInputAssociation id="dia_gp"><sourceRef>Ref_GraphProfile</sourceRef><targetRef>Task_InitConfig</targetRef></dataInputAssociation><dataInputAssociation id="dia_tq"><sourceRef>Ref_TaskQueue</sourceRef><targetRef>Task_InitConfig</targetRef></dataInputAssociation></task><dataObject id="DO_ConfigJson" /><dataObjectReference id="Ref_ConfigJson" name="config.json" dataObjectRef="DO_ConfigJson" /><dataObject id="DO_GraphProfile" /><dataObjectReference id="Ref_GraphProfile" name="GraphProfile" dataObjectRef="DO_GraphProfile" /><dataObject id="DO_TaskQueue" /><dataObjectReference id="Ref_TaskQueue" name="TaskQueue" dataObjectRef="DO_TaskQueue" /><dataStoreReference id="Ref_KB" name="KnowledgeBase" /><sequenceFlow id="sf_c_init" sourceRef="Start_C" targetRef="Task_InitConfig" /></process>
+
+  
+  <process id="Process_Motor" isExecutable="false">
+    <startEvent id="Start_M" name="Sesión activa" />
+    <task id="Task_Motor" name="Inicializar Motor" />
+    <task id="Task_WorkQueue" name="Procesar Cola de Tareas y Acciones"><dataOutputAssociation id="doa_outstate"><sourceRef>Task_WorkQueue</sourceRef><targetRef>Ref_OutputState</targetRef></dataOutputAssociation><dataOutputAssociation id="doa_varjson"><sourceRef>Task_WorkQueue</sourceRef><targetRef>Ref_VarJson</targetRef></dataOutputAssociation><dataOutputAssociation id="doa_outjson"><sourceRef>Task_WorkQueue</sourceRef><targetRef>Ref_OutJson</targetRef></dataOutputAssociation><dataOutputAssociation id="doa_summaries"><sourceRef>Task_WorkQueue</sourceRef><targetRef>Ref_Summaries</targetRef></dataOutputAssociation></task>
+    <endEvent id="End_M" name="Sesión finalizada" />
+    <sequenceFlow id="sf_m1" sourceRef="Start_M" targetRef="Task_Motor" />
+    <sequenceFlow id="sf_m2" sourceRef="Task_Motor" targetRef="Task_WorkQueue" />
+    <sequenceFlow id="sf_m4" sourceRef="Task_WorkQueue" targetRef="End_M" />
+  <dataObject id="DO_OutputState" /><dataObjectReference id="Ref_OutputState" name="outputJson (Estado)" dataObjectRef="DO_OutputState" /></process>
+
+  
+  <process id="Process_Salida" isExecutable="false">
+    <dataObject id="DO_VarJson" /><dataObjectReference id="Ref_VarJson" name="variables_timestamp.json" dataObjectRef="DO_VarJson" /><dataObject id="DO_OutJson" /><dataObjectReference id="Ref_OutJson" name="output_timestamp.json" dataObjectRef="DO_OutJson" /><dataStoreReference id="Ref_Summaries" name="taskSummaries" /></process>
+
+  
+  <process id="Process_Consumo" isExecutable="false">
+    <laneSet id="LaneSet_Consumo"><lane id="Lane_Algoritmos" name="Sistema de Algoritmos (ALTUS/SIPAC/AHP)"><flowNodeRef>Task_ConsumirVars</flowNodeRef><flowNodeRef>End_Alg</flowNodeRef></lane><lane id="Lane_Ingeniero" name="Ingeniero de Software (Auditoría)"><flowNodeRef>Task_AuditarSalida</flowNodeRef><flowNodeRef>End_Ing</flowNodeRef></lane></laneSet><task id="Task_ConsumirVars" name="Consumir variables estructuradas"><dataInputAssociation id="dia_varjson"><sourceRef>Ref_VarJson</sourceRef><targetRef>Task_ConsumirVars</targetRef></dataInputAssociation></task><endEvent id="End_Alg" name="Fin" /><sequenceFlow id="sf_con_alg" sourceRef="Task_ConsumirVars" targetRef="End_Alg" /><task id="Task_AuditarSalida" name="Auditar salida"><dataInputAssociation id="dia_outjson"><sourceRef>Ref_OutJson</sourceRef><targetRef>Task_AuditarSalida</targetRef></dataInputAssociation></task><endEvent id="End_Ing" name="Fin" /><sequenceFlow id="sf_con_ing" sourceRef="Task_AuditarSalida" targetRef="End_Ing" /></process>
+
+  
+  <bpmndi:BPMNDiagram id="BPMNDiagram_5">
+    <bpmndi:BPMNPlane id="BPMNPlane_5" bpmnElement="Collaboration_5">
+
+      
+      <bpmndi:BPMNShape id="Shape_Pool_C" bpmnElement="Pool_Config" isHorizontal="true">
+        <dc:Bounds x="100" y="80" width="800" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_C" bpmnElement="Start_C">
+        <dc:Bounds x="160" y="117" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_ConfigJson" bpmnElement="Ref_ConfigJson">
+        <dc:Bounds x="230" y="105" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_KB" bpmnElement="Ref_KB">
+        <dc:Bounds x="410" y="105" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GraphProfile" bpmnElement="Ref_GraphProfile">
+        <dc:Bounds x="580" y="105" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_TaskQueue" bpmnElement="Ref_TaskQueue">
+        <dc:Bounds x="750" y="105" width="120" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_c1" bpmnElement="sf_c_init"><di:waypoint x="196" y="135" /><di:waypoint x="230" y="135" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Pool_M" bpmnElement="Pool_Motor" isHorizontal="true">
+        <dc:Bounds x="100" y="230" width="800" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_M" bpmnElement="Start_M">
+        <dc:Bounds x="160" y="267" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Motor" bpmnElement="Task_Motor">
+        <dc:Bounds x="230" y="255" width="160" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_WorkQueue" bpmnElement="Task_WorkQueue">
+        <dc:Bounds x="430" y="255" width="200" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_OutputState" bpmnElement="Ref_OutputState">
+        <dc:Bounds x="670" y="255" width="160" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_M" bpmnElement="End_M">
+        <dc:Bounds x="860" y="267" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_m1" bpmnElement="sf_m1"><di:waypoint x="196" y="285" /><di:waypoint x="230" y="285" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_m2" bpmnElement="sf_m2"><di:waypoint x="390" y="285" /><di:waypoint x="430" y="285" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_m4" bpmnElement="sf_m4"><di:waypoint x="830" y="285" /><di:waypoint x="860" y="285" /></bpmndi:BPMNEdge>
+
+      
+      <bpmndi:BPMNShape id="Shape_Pool_Sal" bpmnElement="Pool_Salida" isHorizontal="true">
+        <dc:Bounds x="100" y="380" width="800" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_VarJson" bpmnElement="Ref_VarJson">
+        <dc:Bounds x="430" y="398" width="190" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_OutJson" bpmnElement="Ref_OutJson">
+        <dc:Bounds x="640" y="398" width="190" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Summaries" bpmnElement="Ref_Summaries">
+        <dc:Bounds x="230" y="398" width="170" height="60" />
+      </bpmndi:BPMNShape>
+
+      
+      <bpmndi:BPMNShape id="Shape_Pool_Con" bpmnElement="Pool_Consumo" isHorizontal="true">
+        <dc:Bounds x="100" y="530" width="800" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Algoritmos" bpmnElement="Task_ConsumirVars">
+        <dc:Bounds x="430" y="548" width="200" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Ingeniero" bpmnElement="Task_AuditarSalida">
+        <dc:Bounds x="650" y="548" width="200" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Con" bpmnElement="End_Ing">
+        <dc:Bounds x="860" y="562" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_con1" bpmnElement="sf_con_alg"><di:waypoint x="630" y="578" /><di:waypoint x="860" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_con2" bpmnElement="sf_con_ing"><di:waypoint x="850" y="578" /><di:waypoint x="860" y="580" /></bpmndi:BPMNEdge>
+
+      
+      <bpmndi:BPMNEdge id="Edge_mf_graphprofile" bpmnElement="dia_gp">
+        <di:waypoint x="650" y="165" /><di:waypoint x="310" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_kb" bpmnElement="dia_kb">
+        <di:waypoint x="480" y="165" /><di:waypoint x="350" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_taskqueue" bpmnElement="dia_tq">
+        <di:waypoint x="810" y="165" /><di:waypoint x="530" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_varjson" bpmnElement="doa_varjson">
+        <di:waypoint x="720" y="315" /><di:waypoint x="525" y="398" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_outjson" bpmnElement="doa_outjson">
+        <di:waypoint x="780" y="315" /><di:waypoint x="735" y="398" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_summaries" bpmnElement="doa_summaries">
+        <di:waypoint x="680" y="315" /><di:waypoint x="315" y="398" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_alg" bpmnElement="dia_varjson">
+        <di:waypoint x="525" y="458" /><di:waypoint x="530" y="548" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf_ing" bpmnElement="dia_outjson">
+        <di:waypoint x="735" y="458" /><di:waypoint x="750" y="548" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_dia_config" bpmnElement="dia_config">
+        <di:waypoint x="300" y="105" /><di:waypoint x="280" y="90" />
+      </bpmndi:BPMNEdge>
+
+    <bpmndi:BPMNShape id="Shape_Task_InitConfig" bpmnElement="Task_InitConfig"><dc:Bounds x="230" y="10" width="100" height="80" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Shape_End_Alg" bpmnElement="End_Alg"><dc:Bounds x="860" y="500" width="36" height="36" /></bpmndi:BPMNShape></bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

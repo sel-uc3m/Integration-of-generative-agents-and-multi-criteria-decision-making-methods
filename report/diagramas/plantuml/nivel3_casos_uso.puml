@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam linetype polyline
+
+actor "Stakeholder" as STK
+actor "Ingeniero de Software" as ING
+actor "Agente IA" as AGT
+
+rectangle "Motor de Entrevista" {
+  usecase "Llevar a cabo la entrevista" as UC1
+  usecase "Resolver dudas" as UC2
+  usecase "Adaptar flujo y profundizar" as UC3
+  usecase "Recordar información previa" as UC4
+  usecase "Razonar / Deducir características" as UC5
+  usecase "Configurar entrevista" as UC6
+  usecase "Auditar calidad de la entrevista" as UC7
+}
+
+' Relaciones de actores humanos (izquierda)
+STK -- UC1
+STK -- UC2
+
+ING -- UC6
+ING -- UC7
+
+' Relaciones del Agente IA (derecha)
+AGT -- UC1
+AGT -- UC3
+AGT -- UC4
+AGT -- UC5
+
+' Relaciones entre casos de uso
+UC1 ..> UC4 : <<include>>
+UC2 ..> UC1 : <<extend>>
+UC3 ..> UC1 : <<extend>>
+UC5 ..> UC1 : <<extend>>
+
+note right of UC6 : Define el proceso concreto\n(tareas, acciones, comportamiento)
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+|Sistema|
+start
+:Inicio de sesión;
+:Cargar tareas y configuración;
+while (¿Quedan tareas?) is (Sí)
+    while (¿Quedan acciones en tarea?) is (Sí)
+        if (Tipo de Acción) then (Acción interna)
+            :Razonamiento interno;
+        elseif (Tipo de Acción) then (Bucle)
+            :Leer plantilla y datos recopilados;
+            :Expandir en preguntas/razonamientos\nindividuales;
+        else (Pregunta)
+            if (¿Respuesta en resúmenes previos?) then (Sí)
+                :Omitir pregunta;
+            else (No)
+                |Stakeholder|
+                repeat
+                    :Presentar pregunta;
+                    :Recibir respuesta;
+                    |Sistema|
+                    if (¿Es una duda?) then (Sí)
+                        :Aclarar duda y reformular;
+                    else (No)
+                        if (¿Respuesta suficiente?) then (Sí)
+                            '
+                        else (No)
+                            :Generar pregunta seguimiento;
+                        endif
+                    endif
+                repeat while (¿Es duda o respuesta insuficiente?) is (Sí)
+            endif
+        endif
+    endwhile (No)
+    :Generar Resumen de tarea;
+endwhile (No)
+:Entrevista completada (Output persistido);
+stop
+@enduml

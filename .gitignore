@@ -1,0 +1,32 @@
+# Dependencias y artefactos de build
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+.venv
+__pycache__/
+
+# Sistema
+.DS_Store
+~$*.docx
+~$*.doc
+
+# ---------------------------------------------------------------------------
+# Datos que NO se publican. Se conservan en el repositorio privado del grupo.
+# Esta lista es una barrera de seguridad: si alguien copia estos ficheros
+# al árbol de trabajo, git los ignora y no se suben por error.
+# ---------------------------------------------------------------------------
+report/references/
+core/eval/ground_truth/
+audios/
+*.m4a
+*.mp3
+*.wav
+excels/
+.agents/

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="nivel1_procesos" targetNamespace="http://tfm.adrian/nivel1" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.27.0">
+  <collaboration id="Collaboration_1">
+    <participant id="Pool_Stakeholder" name="Stakeholder" processRef="Process_Stakeholder" />
+    <participant id="Pool_Sistema" name="Sistema de Soporte" processRef="Process_Sistema" />
+    <participant id="Pool_Salida" name="Stakeholder" processRef="Process_Salida" />
+    <messageFlow id="mf1" name="Información de la empresa" sourceRef="Task_InfoEmpresa" targetRef="Task_ALTUS" />
+    <messageFlow id="mf2" name="Procesos actuales y objetivos" sourceRef="Task_InfoProcesos" targetRef="Task_SIPAC" />
+    <messageFlow id="mf3" name="Criterios de priorización" sourceRef="Task_Criterios" targetRef="Task_AHP" />
+    <messageFlow id="mf4" name="Resultado ALTUS" sourceRef="Task_ALTUS" targetRef="Task_RecibeALTUS" />
+    <messageFlow id="mf6" name="Artefactos propuestos" sourceRef="Task_SIPAC" targetRef="Task_RecibeSIPAC" />
+    <messageFlow id="mf5" name="Resultado AHP&#10;(Roadmap priorizado)" sourceRef="Task_AHP" targetRef="Task_RecibeAHP" />
+  </collaboration>
+  <process id="Process_Stakeholder" isExecutable="false">
+    <startEvent id="Start_S" name="Inicio" />
+    <task id="Task_InfoEmpresa" name="Proveer información&#10;de la empresa" />
+    <task id="Task_InfoProcesos" name="Proveer procesos actuales&#10;y objetivos" />
+    <task id="Task_Criterios" name="Proveer criterios&#10;de priorización" />
+    <endEvent id="End_S" name="Fin" />
+    <sequenceFlow id="sf_s1" sourceRef="Start_S" targetRef="Task_InfoEmpresa" />
+    <sequenceFlow id="sf_s2" sourceRef="Task_InfoEmpresa" targetRef="Task_InfoProcesos" />
+    <sequenceFlow id="sf_s3" sourceRef="Task_InfoProcesos" targetRef="Task_Criterios" />
+    <sequenceFlow id="sf_s4" sourceRef="Task_Criterios" targetRef="End_S" />
+  </process>
+  <process id="Process_Sistema" isExecutable="false">
+    <task id="Task_ALTUS" name="ALTUS&#10;Madurez Digital" />
+    <task id="Task_SIPAC" name="SIPAC&#10;Activos y Artefactos" />
+    <task id="Task_AHP" name="AHP&#10;Priorización" />
+    <sequenceFlow id="sf_sys1" sourceRef="Task_SIPAC" targetRef="Task_AHP" />
+  </process>
+  <process id="Process_Salida" isExecutable="false">
+    <task id="Task_RecibeALTUS" name="Recibir Resultado ALTUS" />
+    <task id="Task_RecibeSIPAC" name="Recibir Artefactos&#10;propuestos" />
+    <task id="Task_RecibeAHP" name="Recibir Roadmap&#10;priorizado" />
+    <endEvent id="End_Sal" name="Fin" />
+    <sequenceFlow id="sf_sal1" sourceRef="Task_RecibeALTUS" targetRef="End_Sal" />
+    <sequenceFlow id="sf_sal3" sourceRef="Task_RecibeSIPAC" targetRef="End_Sal" />
+    <sequenceFlow id="sf_sal2" sourceRef="Task_RecibeAHP" targetRef="End_Sal" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Shape_Pool_S" bpmnElement="Pool_Stakeholder" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="700" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_S" bpmnElement="Start_S">
+        <dc:Bounds x="210" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="215" y="158" width="26" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_InfoEmpresa" bpmnElement="Task_InfoEmpresa">
+        <dc:Bounds x="280" y="107" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_InfoProcesos" bpmnElement="Task_InfoProcesos">
+        <dc:Bounds x="450" y="107" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Criterios" bpmnElement="Task_Criterios">
+        <dc:Bounds x="620" y="107" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_S" bpmnElement="End_S">
+        <dc:Bounds x="790" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="800" y="158" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_s1" bpmnElement="sf_s1">
+        <di:waypoint x="246" y="140" />
+        <di:waypoint x="280" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_s2" bpmnElement="sf_s2">
+        <di:waypoint x="420" y="137" />
+        <di:waypoint x="450" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_s3" bpmnElement="sf_s3">
+        <di:waypoint x="590" y="137" />
+        <di:waypoint x="620" y="137" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_s4" bpmnElement="sf_s4">
+        <di:waypoint x="760" y="137" />
+        <di:waypoint x="790" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Pool_Sys" bpmnElement="Pool_Sistema" isHorizontal="true">
+        <dc:Bounds x="160" y="240" width="700" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_ALTUS" bpmnElement="Task_ALTUS">
+        <dc:Bounds x="280" y="267" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_SIPAC" bpmnElement="Task_SIPAC">
+        <dc:Bounds x="450" y="267" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_AHP" bpmnElement="Task_AHP">
+        <dc:Bounds x="620" y="267" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_sys1" bpmnElement="sf_sys1">
+        <di:waypoint x="590" y="297" />
+        <di:waypoint x="620" y="297" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Pool_Sal" bpmnElement="Pool_Salida" isHorizontal="true">
+        <dc:Bounds x="160" y="400" width="700" height="120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_RecibeALTUS" bpmnElement="Task_RecibeALTUS">
+        <dc:Bounds x="280" y="427" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_RecibeSIPAC" bpmnElement="Task_RecibeSIPAC">
+        <dc:Bounds x="450" y="427" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_RecibeAHP" bpmnElement="Task_RecibeAHP">
+        <dc:Bounds x="620" y="427" width="140" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Sal" bpmnElement="End_Sal">
+        <dc:Bounds x="790" y="442" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="800" y="478" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_sf_sal1" bpmnElement="sf_sal1">
+        <di:waypoint x="396" y="487" />
+        <di:waypoint x="430" y="510" />
+        <di:waypoint x="770" y="510" />
+        <di:waypoint x="797" y="474" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_sal3" bpmnElement="sf_sal3">
+        <di:waypoint x="576" y="487" />
+        <di:waypoint x="600" y="500" />
+        <di:waypoint x="770" y="500" />
+        <di:waypoint x="796" y="473" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_sf_sal2" bpmnElement="sf_sal2">
+        <di:waypoint x="760" y="457" />
+        <di:waypoint x="790" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf1" bpmnElement="mf1">
+        <di:waypoint x="350" y="167" />
+        <di:waypoint x="350" y="267" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="357" y="207" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf2" bpmnElement="mf2">
+        <di:waypoint x="520" y="167" />
+        <di:waypoint x="520" y="267" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="535" y="207" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf3" bpmnElement="mf3">
+        <di:waypoint x="690" y="167" />
+        <di:waypoint x="690" y="267" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="207" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf4" bpmnElement="mf4">
+        <di:waypoint x="350" y="327" />
+        <di:waypoint x="350" y="427" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="366" y="374" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf6" bpmnElement="mf6">
+        <di:waypoint x="520" y="327" />
+        <di:waypoint x="520" y="427" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="367" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_mf5" bpmnElement="mf5">
+        <di:waypoint x="690" y="327" />
+        <di:waypoint x="690" y="427" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="702" y="367" width="128" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,580 @@
+{
+  "session_id": "ALTUS_FULL",
+  "profile": {
+    "processName": "ALTUS",
+    "allowFollowUps": true,
+    "allowDoubtConfirmation": true,
+    "allowKnowledgeConsultation": true,
+    "generateTaskSummaries": true,
+    "saveTaskSummariesToOutput": false,
+    "answerSufficiencyPrompt": "METHODOLOGY: ALTUS (Capability Assessment). This requires depth to assess maturity levels (1-5). Be stricter: ensure the user provides enough operational detail to justify a specific maturity score.",
+    "hooks": {
+      "afterActionAnswer": {
+        "instruction": "Evalúa la capacidad de la organización (escala 0-5) basándote en la pregunta y en la respuesta resumida del usuario, justificando la puntuación de forma muy concisa.\nRúbrica:\n- 5 (Excelente): La capacidad se considera, existe una herramienta/instrumento digital que la gestiona, y es conocida en toda la organización.\n- 4 (Buena): La capacidad se considera, existe soporte tecnológico y se gestiona digitalmente.\n- 3 (Aceptable): La capacidad se considera, existe soporte tecnológico, pero NO se gestiona digitalmente.\n- 2 (Pobre): La capacidad se considera, y el soporte tecnológico/herramienta está bajo desarrollo.\n- 1 (Inaceptable/No existe): La capacidad no se considera o no hay herramienta en absoluto.\n- 0 (N/A): La capacidad no aplica en este caso.",
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "qualification": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "qualification_reasoning": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "qualification",
+            "qualification_reasoning"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "tasks": [
+    {
+      "id": "1_CONF",
+      "name": "Nivel de Madurez 1 - Configuración",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "CONF",
+        "architecturalName": "Configuración"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "¿Tiene esta organización definidos sus objetivos estratégicos o sus objetivos de negocio? ¿Tienen en cuenta la importancia del Knowledge Management?"
+        },
+        {
+          "id": "2",
+          "type": "question",
+          "content": "¿Qué proceso o servicio quiere mejorar?"
+        },
+        {
+          "id": "3",
+          "type": "question",
+          "content": "¿Tiene usted identificados y clasificados los activos del proceso o servicio? ¿Los tiene alineados con los objetivos de proceso, de negocio o estratégicos de su organización?"
+        },
+        {
+          "id": "4",
+          "type": "question",
+          "content": "¿Para esta organización, y concretamente para el proceso o servicio identificado, tiene algún mecanismo que sirva para crear activos de conocimiento?"
+        },
+        {
+          "id": "5",
+          "type": "question",
+          "content": "¿Tiene esta organización, y concretamente para el proceso o servicio identificado, un repositorio de conocimiento? ¿Está éste organizado y tiene reglas establecidas para su uso?"
+        },
+        {
+          "id": "6",
+          "type": "question",
+          "content": "¿Para esta organización y concretamente para el proceso o servicio identificado, tiene identificadas las redes de comunicación formales e informales?"
+        },
+        {
+          "id": "7",
+          "type": "question",
+          "content": "¿La compañía tiene presente que debe contar con un mecanismo para clasificar sus activos de conocimiento, de cara al etiquetado para su posterior reutilización por los miembros de la organización?"
+        }
+      ]
+    },
+    {
+      "id": "1_FORM",
+      "name": "Nivel de Madurez 1 - Formativo",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "FORM",
+        "architecturalName": "Formativo"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "¿Tiene algún mecanismo para saber lo que saben sus compañeros? ¿Cuáles?"
+        },
+        {
+          "id": "2",
+          "type": "question",
+          "content": "Cuando un empleado toma un curso de formación, ¿es consciente de que la compañía está al tanto de su progreso? ¿Se valora positiva o negativamente que una persona inicie y finalice un curso con éxito?"
+        }
+      ]
+    },
+    {
+      "id": "1_OPER",
+      "name": "Nivel de Madurez 1 - Operativo",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "OPER",
+        "architecturalName": "Operativo"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "Cuando está inmerso en el día a día de su actividad laboral, concretamente para el proceso o servicio identificado ¿tiene la posibilidad de utilizar el conocimiento y experiencia previa que se ha venido acumulando con anterioridad en la organización al respecto de dicho proceso? ¿Cómo?"
+        }
+      ]
+    },
+    {
+      "id": "1_PRO",
+      "name": "Nivel de Madurez 1 - Proactivo",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "PRO",
+        "architecturalName": "Proactivo"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "Cuando comparte conocimiento con sus compañeros, ¿siente que esto se valora de alguna manera?"
+        },
+        {
+          "id": "2",
+          "type": "question",
+          "content": "Si hay modificación o actualización de algún recurso que puede ser de su interés, ¿se reciben las notificaciones pertenecientes?"
+        }
+      ]
+    },
+    {
+      "id": "1_VAL",
+      "name": "Nivel de Madurez 1 - Valoración SP3",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "VAL",
+        "architecturalName": "Valoración SP3"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "A nivel personal, ¿recibe algún tipo de informe por parte de la organización para la que trabaja, en el que se le comunique anualmente cuál ha sido su aportación a nivel de conocimiento organizativo en relación con el proceso o servicio inicialmente identificado?"
+        },
+        {
+          "id": "2",
+          "type": "question",
+          "content": "¿Se ha realizado a esta organización alguna auditoría para conocer la madurez del gobierno del conocimiento de su organización, y para conocer el valor que sus activos intangibles de proceso aportan a su organización? Si lo ha realizado, ¿se ha definido un plan de mejora sobre las capacidades de gobierno del conocimiento y los activos intangibles de proceso?"
+        },
+        {
+          "id": "3",
+          "type": "question",
+          "content": "Cuando usted utiliza un activo de conocimiento creado por otra persona, ¿tiene la posibilidad de dar su opinión sobre qué le ha aportado su uso?"
+        },
+        {
+          "id": "4",
+          "type": "question",
+          "content": "¿Su organización tiene un mecanismo de valoración del capital intelectual humano?"
+        }
+      ]
+    },
+    {
+      "id": "1_SOCI",
+      "name": "Nivel de Madurez 1 - Social",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "SOCI",
+        "architecturalName": "Social"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "Cuando quiere compartir algo con la compañía o con sus compañeros, ¿tiene algún mecanismo para hacerlo? ¿Cuál?"
+        }
+      ]
+    },
+    {
+      "id": "1_MEMO",
+      "name": "Nivel de Madurez 1 - Memoria transaccional",
+      "metadata": {
+        "maturityLevel": 1,
+        "maturityName": "Nivel de Madurez 1",
+        "architecturalCode": "MEMO",
+        "architecturalName": "Memoria transaccional"
+      },
+      "actions": [
+        {
+          "id": "1",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita crear, almacenar conocimiento que se haya generado de manera individual, para su posterior recuperación?"
+        },
+        {
+          "id": "2",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita dar una valoración al conocimiento que se haya generado de manera individual?"
+        },
+        {
+          "id": "3",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita observar el crecimiento, o simplemente, el movimiento de las aportaciones individuales de conocimiento?"
+        }
+      ]
+    },
+    {
+      "id": "2_CONF",
+      "name": "Nivel de Madurez 2 - Configuración",
+      "metadata": {
+        "maturityLevel": 2,
+        "maturityName": "Nivel de Madurez 2",
+        "architecturalCode": "CONF",
+        "architecturalName": "Configuración"
+      },
+      "actions": [
+        {
+          "id": "8",
+          "type": "question",
+          "content": "¿Existe algún mecanismo en su organización y concretamente para el proceso/servicio identificado que le sirva para crear conocimiento o compartirlo con sus compañeros de forma colectiva? Por ejemplo, conformando equipos."
+        }
+      ]
+    },
+    {
+      "id": "2_FORM",
+      "name": "Nivel de Madurez 2 - Formativo",
+      "metadata": {
+        "maturityLevel": 2,
+        "maturityName": "Nivel de Madurez 2",
+        "architecturalCode": "FORM",
+        "architecturalName": "Formativo"
+      },
+      "actions": [
+        {
+          "id": "3",
+          "type": "question",
+          "content": "¿Existen en esta organización y concretamente para el proceso/servicio identificado, mecanismos que sirvan para rastrear cómo un grupo de personas están realizando un curso de formación?"
+        },
+        {
+          "id": "4",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que esté orientado a la definición de cursos o sesiones de formación colectiva en los casos en los que un grupo de personas requieran del mismo tipo de conocimiento?"
+        }
+      ]
+    },
+    {
+      "id": "2_PRO",
+      "name": "Nivel de Madurez 2 - Proactivo",
+      "metadata": {
+        "maturityLevel": 2,
+        "maturityName": "Nivel de Madurez 2",
+        "architecturalCode": "PRO",
+        "architecturalName": "Proactivo"
+      },
+      "actions": [
+        {
+          "id": "3",
+          "type": "question",
+          "content": "¿Existe en esta organización, y para el proceso o servicio identificado, algún mecanismo que permita avisar, sin que uno lo haya solicitado, sobre el uso que se está dando y la valoración que los compañeros dan a un conocimiento concreto que un empleado ha compartido?"
+        }
+      ]
+    },
+    {
+      "id": "2_VAL",
+      "name": "Nivel de Madurez 2 - Valoración SP3",
+      "metadata": {
+        "maturityLevel": 2,
+        "maturityName": "Nivel de Madurez 2",
+        "architecturalCode": "VAL",
+        "architecturalName": "Valoración SP3"
+      },
+      "actions": [
+        {
+          "id": "5",
+          "type": "question",
+          "content": "¿Existe en esta organización y concretamente para el proceso o servicio identificado, algún mecanismo que permita que la capacidad de transferencia de un empleado sea valorada por sus superiores, sus iguales, y sus subordinados?"
+        },
+        {
+          "id": "6",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita valorar el capital tecnológico de la organización?"
+        }
+      ]
+    },
+    {
+      "id": "2_SOCI",
+      "name": "Nivel de Madurez 2 - Social",
+      "metadata": {
+        "maturityLevel": 2,
+        "maturityName": "Nivel de Madurez 2",
+        "architecturalCode": "SOCI",
+        "architecturalName": "Social"
+      },
+      "actions": [
+        {
+          "id": "2",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente, para el proceso o servicio identificado, algún mecanismo que permita crear algún tipo de comunidad que sea impulsora de la creación de relaciones sociales entre los empleados que se usen para afianzar vínculos en base a intereses comunes?"
+        }
+      ]
+    },
+    {
+      "id": "2_MEMO",
+      "name": "Nivel de Madurez 2 - Memoria Transaccional",
+      "metadata": {
+        "maturityLevel": 2,
+        "maturityName": "Nivel de Madurez 2",
+        "architecturalCode": "MEMO",
+        "architecturalName": "Memoria Transaccional"
+      },
+      "actions": [
+        {
+          "id": "4",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso/servicio identificado, algún mecanismo que permita crear y almacenar (repositorio), para su posterior recuperación, conocimiento que se haya generado de manera grupal?"
+        },
+        {
+          "id": "5",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso/servicio identificado, algún mecanismo que permita dar una valoración al conocimiento que se haya generado de manera grupal?"
+        },
+        {
+          "id": "6",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso/servicio identificado, algún mecanismo que permita observar el crecimiento, o simplemente el movimiento de las aportaciones grupales de conocimiento?"
+        }
+      ]
+    },
+    {
+      "id": "3_CONF",
+      "name": "Nivel de Madurez 3 - Configuración",
+      "metadata": {
+        "maturityLevel": 3,
+        "maturityName": "Nivel de Madurez 3",
+        "architecturalCode": "CONF",
+        "architecturalName": "Configuración"
+      },
+      "actions": [
+        {
+          "id": "9",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita recoger indicadores que reflejen la calidad de un determinado producto o servicio asignado a usted, cada vez que trabaja o termina con el mismo?"
+        },
+        {
+          "id": "10",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, alguna estrategia que apueste por la mejora de los procesos o servicios a través de la gestión del conocimiento?"
+        },
+        {
+          "id": "12",
+          "type": "question",
+          "content": "¿Existe en esta organización y concretamente para el proceso o servicio identificado algún mecanismo que sirva para retroalimentar los activos de conocimiento una vez que son usados por alguien?"
+        }
+      ]
+    },
+    {
+      "id": "3_FORM",
+      "name": "Nivel de Madurez 3 - Formativo",
+      "metadata": {
+        "maturityLevel": 3,
+        "maturityName": "Nivel de Madurez 3",
+        "architecturalCode": "FORM",
+        "architecturalName": "Formativo"
+      },
+      "actions": [
+        {
+          "id": "5",
+          "type": "question",
+          "content": "¿Existe en esta organización un grupo de personas encargadas, dependientes y soportadas directamente por la alta dirección de la compañía, encargadas de velar y transmitir la importancia del gobierno del conocimiento organizativo, así como los objetivos que se están alcanzando gracias a dicho gobierno?"
+        },
+        {
+          "id": "6",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita identificar casos de proyectos desarrollados dentro de esta organización, que por su naturaleza sean merecedores de ser incorporados como casos de estudio en los cursos de formación?"
+        }
+      ]
+    },
+    {
+      "id": "3_PRO",
+      "name": "Nivel de Madurez 3 - Proactivo",
+      "metadata": {
+        "maturityLevel": 3,
+        "maturityName": "Nivel de Madurez 3",
+        "architecturalCode": "PRO",
+        "architecturalName": "Proactivo"
+      },
+      "actions": [
+        {
+          "id": "4",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual las personas que actúan como Coach en relación a promover la gestión del conocimiento, sean notificadas de la valoración que se hace de ellos en relación a este rol dentro de la compañía?"
+        }
+      ]
+    },
+    {
+      "id": "3_VAL",
+      "name": "Nivel de Madurez 3 - Valoración SP3",
+      "metadata": {
+        "maturityLevel": 3,
+        "maturityName": "Nivel de Madurez 3",
+        "architecturalCode": "VAL",
+        "architecturalName": "Valoración SP3"
+      },
+      "actions": [
+        {
+          "id": "7",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita valorar el capital estructural de la organización?"
+        },
+        {
+          "id": "8",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita valorar el capital relacional de la organización?"
+        },
+        {
+          "id": "9",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita que permita valorar el capital de negocio de la organización?"
+        }
+      ]
+    },
+    {
+      "id": "3_SOCI",
+      "name": "Nivel de Madurez 3 - Social",
+      "metadata": {
+        "maturityLevel": 3,
+        "maturityName": "Nivel de Madurez 3",
+        "architecturalCode": "SOCI",
+        "architecturalName": "Social"
+      },
+      "actions": [
+        {
+          "id": "3",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual se reconozca a los miembros de la organización la aportación de conocimiento que han hecho a la organización, o concretamente al proceso o servicio específico?"
+        },
+        {
+          "id": "4",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual se reconozca a los clientes o colaboradores externos de la organización la aportación de conocimiento que han hecho a la organización para un determinado proceso o servicio?"
+        }
+      ]
+    },
+    {
+      "id": "4_CONF",
+      "name": "Nivel de Madurez 4 - Configuración",
+      "metadata": {
+        "maturityLevel": 4,
+        "maturityName": "Nivel de Madurez 4",
+        "architecturalCode": "CONF",
+        "architecturalName": "Configuración"
+      },
+      "actions": [
+        {
+          "id": "11",
+          "type": "question",
+          "content": "¿Tiene la organización para el proceso o servicio identificado, un procedimiento para definir perfiles profesiográficos? (Profesiongrama: documento técnico en el que se describe con detalle las funciones, tareas y actividades de un puesto de trabajo. También contempla la descripción de las destrezas y habilidades del empleado idóneo para ocupar el puesto)."
+        }
+      ]
+    },
+    {
+      "id": "4_FORM",
+      "name": "Nivel de Madurez 4 - Formativo",
+      "metadata": {
+        "maturityLevel": 4,
+        "maturityName": "Nivel de Madurez 4",
+        "architecturalCode": "FORM",
+        "architecturalName": "Formativo"
+      },
+      "actions": [
+        {
+          "id": "7",
+          "type": "question",
+          "content": "¿Tiene la organización para el proceso o servicio identificado, una estrategia de formación inteligente?"
+        }
+      ]
+    },
+    {
+      "id": "4_PRO",
+      "name": "Nivel de Madurez 4 - Proactivo",
+      "metadata": {
+        "maturityLevel": 4,
+        "maturityName": "Nivel de Madurez 4",
+        "architecturalCode": "PRO",
+        "architecturalName": "Proactivo"
+      },
+      "actions": [
+        {
+          "id": "5",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual un jefe pueda recibir periódicamente información relevante de otros proyectos o servicios similares a los que tiene en marcha, que le permitan aprovechar el conocimiento que se está generando en la organización?"
+        },
+        {
+          "id": "6",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual cualquier empleado reciba periódicamente conocimiento que se ha generado en el seno de la organización y que pudiera ser útil para su crecimiento profesional, y que le sea nutritivo por el perfil o puesto que ocupa dentro de la organización?"
+        },
+        {
+          "id": "7",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual cualquier empleado reciba periódicamente conocimiento que se ha generado en el seno de la organización y que pudiera ser útil en sus tareas cotidianas?"
+        },
+        {
+          "id": "8",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual cualquier empleado reciba periódicamente conocimiento que se ha generado en el seno de la compañía y que pudiera ser útil para tomar decisiones en torno a un tema determinado?"
+        }
+      ]
+    },
+    {
+      "id": "4_VAL",
+      "name": "Nivel de Madurez 4 - Valoración SP3",
+      "metadata": {
+        "maturityLevel": 4,
+        "maturityName": "Nivel de Madurez 4",
+        "architecturalCode": "VAL",
+        "architecturalName": "Valoración SP3"
+      },
+      "actions": [
+        {
+          "id": "10",
+          "type": "question",
+          "content": "¿Tiene la organización para el proceso o servicio identificado, un procedimiento de valoración de las relaciones sociales transversales? (¿Existen mecanismos como el cuestionario 360º?)"
+        },
+        {
+          "id": "11",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo mediante el cual se pueda valorar el capital intelectual de la organización?"
+        }
+      ]
+    },
+    {
+      "id": "4_SOCI",
+      "name": "Nivel de Madurez 4 - Social",
+      "metadata": {
+        "maturityLevel": 4,
+        "maturityName": "Nivel de Madurez 4",
+        "architecturalCode": "SOCI",
+        "architecturalName": "Social"
+      },
+      "actions": [
+        {
+          "id": "5",
+          "type": "question",
+          "content": "¿Existe en esta organización, y para el proceso o servicio identificado, algún mecanismo mediante el cual se puedan crear redes entre personas que no pertenecen al mismo área o departamento?"
+        }
+      ]
+    },
+    {
+      "id": "4_MEMO",
+      "name": "Nivel de Madurez 4 - Memoria Transaccional",
+      "metadata": {
+        "maturityLevel": 4,
+        "maturityName": "Nivel de Madurez 4",
+        "architecturalCode": "MEMO",
+        "architecturalName": "Memoria Transaccional"
+      },
+      "actions": [
+        {
+          "id": "7",
+          "type": "question",
+          "content": "¿Existe en esta organización, y concretamente para el proceso o servicio identificado, algún mecanismo que permita recuperar y difundir apropiadamente conocimiento de interés para distintas personas que utilicen el proceso o servicio?"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "tfm-monorepo",
+  "private": true,
+  "workspaces": [
+    "core",
+    "web"
+  ],
+  "scripts": {
+    "build": "bun run --cwd core build && bun run --cwd web build",
+    "test": "bun run --cwd core test",
+    "start": "bun run --cwd web start",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:stop": "pm2 stop ecosystem.config.cjs",
+    "pm2:restart": "pm2 restart ecosystem.config.cjs",
+    "pm2:logs": "pm2 logs Metodologia-Integracion-Agentes-Preproyecto",
+    "dev:web": "bun run --cwd web dev",
+    "dev:core": "bun run --cwd core dev",
+    "eval": "bun run --cwd core eval",
+    "eval:rescore": "bun run --cwd core eval:rescore",
+    "eval:matrix": "bun run --cwd core eval:matrix",
+    "eval:calibrate": "bun run --cwd core eval:calibrate"
+  }
+}

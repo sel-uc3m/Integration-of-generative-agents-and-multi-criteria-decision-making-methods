@@ -1,0 +1,51 @@
+@startuml
+class GraphProfile {
+    +processName : string
+    +allowFollowUps : boolean
+    +answerSufficiencyPrompt : string
+    +systemPrompt : string
+    +knowledgeBase : KnowledgeBaseItem[]
+    +hooks : Record
+}
+
+class GraphHook {
+    +instruction : string
+    +outputVar : string
+}
+
+class Task {
+    +id : string
+    +name : string
+    +actions : Action[]
+}
+
+class Action {
+    +id : string
+    +type : ActionType
+    +content : string
+    +outputVar : string
+}
+
+enum ActionType {
+    question
+    internal
+    loop_validation
+}
+
+class GraphState {
+    +profile : GraphProfile
+    +taskQueue : Task[]
+    +actionQueue : Action[]
+    +currentTask : Task
+    +currentAction : Action
+    +outputJson : Record
+    +taskSummaries : Record
+}
+
+GraphProfile "1" --> "0..2" GraphHook : hooks
+GraphState "1" --> "1" GraphProfile : profile
+GraphState "1" --> "0..*" Task : taskQueue / currentTask
+GraphState "1" --> "0..*" Action : actionQueue / currentAction
+Task "1" --> "1..*" Action : actions
+Action --> ActionType : type
+@enduml

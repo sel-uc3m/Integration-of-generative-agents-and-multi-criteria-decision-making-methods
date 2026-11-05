@@ -1,0 +1,12 @@
+= Conclusions and Future Work <sec:conclusiones>
+
+This article has presented _AI-Driven DTGEP_, a methodology for the software pre-project phase that automates the qualitative elicitation of intangible assets and formalizes technological decision-making through generative agents. By decoupling an asynchronous conversational engine (governed by LangGraph, strict JSON schemas, and hierarchical memory) from the deterministic execution of formal decision algorithms (ALTUS for maturity, SIPAC for solution deduction, and AHP for multicriteria prioritization), the system resolves the historical bottleneck of mandatory synchronous engineer involvement during pre-project requirements gathering.
+
+Empirical validation across four real-world enterprises and seven language models demonstrated that the system achieves a mean maturity error ($"MAE" in [1.06, 1.27]$) comparable to human inter-assessor variability, an $88.9\%$ _Weighted Recall_ in discovering technological artifacts, and strict axiomatic consistency ($"CR" in [0.04, 0.08]$ in AHP). Furthermore, the comparative study against a direct prompting baseline proved that unstructured LLM usage lacking an agentic architecture and typed contracts incurs quantitative hallucinations, premature commercial solutionism, and violations of mathematical consistency.
+
+The principal lesson learned is that the true value of AI in software engineering does not lie in outsourcing decisions to a generative black box, but in restricting the model to conversational information elicitation within a rigorous engineering workflow, while reserving quantitative calculation and prioritization for deterministic, auditable algorithms. Additionally, compact open-weight models (4B–9B) running on modest consumer hardware (16 GB RAM) provide sufficient diagnostic competence in \~60 minutes of net execution time, enabling sovereign, privacy-preserving audits in SMEs without risking confidential data exposure.
+
+As priority directions for future work, we envision:
+1. Designing asynchronous _multi-stakeholder_ interviews to reconcile conflicting perspectives across departments (management, operations, and IT).
+2. Incorporating episodic vector memory (selective conversational RAG) to optimize context window consumption during extended sessions.
+3. Distilling agentic reasoning into lightweight specialized classifiers to govern graph state transitions in milliseconds, reserving generative LLMs exclusively for open-ended dialectical interaction.

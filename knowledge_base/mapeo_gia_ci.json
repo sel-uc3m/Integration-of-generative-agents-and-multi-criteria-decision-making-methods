@@ -1,0 +1,13 @@
+{
+  "1": ["Capital humano", "Capital organizativo", "Capital tecnologico", "Capital de negocio", "Capital social"],
+  "2": ["Capital humano", "Capital organizativo", "Capital de negocio", "Capital social", "Capital de emprendimiento e innovacion"],
+  "3": ["Capital humano", "Capital organizativo", "Capital tecnologico", "Capital de negocio", "Capital de emprendimiento e innovacion"],
+  "4": ["Capital organizativo", "Capital de negocio", "Capital de emprendimiento e innovacion"],
+  "5": ["Capital humano", "Capital organizativo", "Capital tecnologico", "Capital de negocio", "Capital social", "Capital de emprendimiento e innovacion"],
+  "6": ["Capital humano", "Capital organizativo", "Capital tecnologico", "Capital de negocio", "Capital de emprendimiento e innovacion"],
+  "7": ["Capital humano", "Capital de negocio", "Capital social"],
+  "8": ["Capital organizativo", "Capital de negocio", "Capital social"],
+  "9": ["Capital organizativo", "Capital social", "Capital de emprendimiento e innovacion"],
+  "10": ["Capital de negocio", "Capital social", "Capital de emprendimiento e innovacion"],
+  "11": ["Capital humano", "Capital organizativo", "Capital tecnologico", "Capital de emprendimiento e innovacion"]
+}

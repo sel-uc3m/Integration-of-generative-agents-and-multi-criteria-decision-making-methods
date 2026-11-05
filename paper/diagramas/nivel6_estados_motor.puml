@@ -1,0 +1,66 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 10
+skinparam roundCorner 8
+skinparam shadowing false
+skinparam dpi 300
+
+skinparam state {
+    BackgroundColor White
+    BorderColor #22242A
+    FontColor #111827
+    BorderThickness 1.2
+}
+
+skinparam state<<hidden>> {
+    BackgroundColor transparent
+    BorderColor transparent
+    FontColor transparent
+}
+
+skinparam arrow {
+    Color #1F2937
+    FontColor #1F2937
+    FontSize 9
+}
+
+' Row 1: S2b (left), S1 (center), S2a (right)
+state "<b>2b. Autonomous Branch</b>\n<i>(executeInternalAction)</i>" as S2b
+state "<b>1. Interpretation & Loading</b>\n<i>(taskLoader, extractAction)</i>" as S1
+state "<b>2a. Dialectical Branch</b>\n<i>(questionManager, consultant)</i>" as S2a
+
+' Row 2: spacer (left), S4 (center), S3 (right)
+state "<color:transparent><b>2b. Autonomous Branch</b>\n<i>(executeInternalAction)</i></color>" as spacer <<hidden>>
+state "<b>4. Memory & Persistence</b>\n<i>(summarizers, variables.json)</i>" as S4
+state "<b>3. Control & Guardrails</b>\n<i>(architect, stopping guardrails)</i>" as S3
+
+' 3x2 Grid alignment
+S2b -[hidden]right-> S1
+S1 -[hidden]right-> S2a
+
+spacer -[hidden]right-> S4
+S4 -[hidden]right-> S3
+
+S2b -[hidden]down-> spacer
+S1 -[hidden]down-> S4
+S2a -[hidden]down-> S3
+
+[*] -down-> S1 : Initial configuration (JSON)
+
+' Symmetric horizontal bifurcation from S1
+S1 -right-> S2a : ['question' type]\nReAct conversation
+S1 -left-> S2b : ['internal' type]\nLLM inference
+
+' Dialectical branch (right column)
+S2a -down-> S3 : Interlocutor response
+S3 -up-> S2a : [insufficient]\nFollow-up question
+S3 -left-> S4 : [sufficient | stop]\nConsolidation
+
+' Autonomous branch (left column to center)
+S2b -down-> S4 : Inference\ncompleted
+
+' Task iteration and final persistence (central column)
+S4 -up-> S1 : [remaining tasks]\nNext task
+S4 -down-> [*] : [tasks completed]\nTyped persistence
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+
+skinparam backgroundColor transparent
+skinparam SequenceMessageAlign center
+
+actor "Stakeholder\n(Usuario)" as S #E8F8F5
+participant "Interfaz\n(UI/CLI)" as I #E8F8F5
+participant "Grafo\n(Motor)" as G #EAF2FF
+participant "Memoria\nCorto Plazo" as MCP #FFFDE7
+participant "Memoria\nMedio Plazo" as MMP #FFFDE7
+participant "Modelo LLM" as LLM #F4ECF7
+
+
+== Inicio de la Entrevista ==
+S -> I : Inicia sesión de entrevista
+I -> G : Inicializa ejecución del Grafo
+
+== Tarea 1 (Ejecución en curso) ==
+G -> MCP : saveToOutput (Acción 1)
+G -> MCP : saveToOutput (Acción 2)
+
+== Al agotar acciones ==
+G -> LLM : Genera resumen global\n(Contexto local)
+LLM --> G : Resumen de tarea
+G -> MMP : taskSummarizer\n(Guarda resumen)
+
+== Tarea N (Futuro) ==
+G -> MMP : Extrae contexto histórico
+G -> LLM : extractAnswerFromSummaries
+LLM --> G : ¿Respuesta en contexto?
+
+alt Sí
+    G -> G : Omite interactuar\n(Respuesta automática)
+else No
+    G -> I : Muestra pregunta
+    I -> S : Presenta pregunta
+    S -> I : Proporciona respuesta
+    I -> G : Devuelve respuesta
+end
+@enduml

@@ -1,0 +1,13 @@
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    environment: "node",
+    include: ["tests/llm/**/*.llm.test.ts"],
+    restoreMocks: true,
+    clearMocks: true,
+    fileParallelism: false,
+    testTimeout: 60000,
+    hookTimeout: 60000,
+  },
+});
