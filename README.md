@@ -1,4 +1,6 @@
-# Plataforma Agéntica para la Toma de Decisiones en la Fase de Preproyecto de Software (AI-Driven DTGEP)
+# Integración de agentes generativos y métodos de toma de decisiones multicriterio
+
+### *Integration of generative agents and multi-criteria decision-making methods*
 
 [![Universidad Carlos III de Madrid](https://img.shields.io/badge/UC3M-Master_TFM-blue)](https://www.uc3m.es)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -12,6 +14,11 @@
 > **Autor:** Adrián Fernández Galán  
 > **Tutoras:** Dra. María Isabel Sánchez Segura & Dra. Fuensanta Medina Domínguez  
 > **Institución:** Universidad Carlos III de Madrid (UC3M) — Departamento de Informática
+>
+> **Documentos:** [Memoria](report/Memoria_Final.pdf) · [Artículo científico](paper/paper.pdf)
+
+> [!NOTE]
+> Los datos de las empresas colaboradoras que participaron en el estudio no se incluyen en este repositorio. Los identificadores de caso, los nombres de empresa y las capturas de pantalla han sido anonimizados. El conjunto de datos completo se conserva en el repositorio privado del grupo de investigación.
 
 ---
 
@@ -58,6 +65,7 @@ El repositorio está organizado como un espacio de trabajo modular (*monorepo*):
 │   └── doc_artifacts.md      # Diccionario de artefactos
 │
 ├── report/                # Memoria académica oficial del TFM (Typst)
+├── paper/                 # Artículo científico (Typst, formato IEEE)
 └── DEPLOYMENT.md          # Guía de despliegue en servidor VPS con PM2 y Ollama
 ```
 
@@ -68,7 +76,7 @@ Para consultar la documentación específica de cada subsistema:
 * 🚀 [Guía de Despliegue en Producción (`DEPLOYMENT.md`)](DEPLOYMENT.md)
 
 > [!NOTE]
-> Los entregables académicos `paper/` (artículo científico) y `presentation/` (diapositivas en Slidev) se preservan en la rama canónica `main` para mantener esta rama `despliegue` ligera y enfocada exclusivamente en producción.
+> Este repositorio reúne los entregables del TFM: la plataforma (`core/`, `web/`), la memoria (`report/`) y el artículo científico (`paper/`).
 
 ---
 
@@ -134,6 +142,8 @@ Abre tu navegador en **`http://localhost:3000`** para interactuar con la platafo
 
 El repositorio incluye una suite integral de evaluación con **Ground Truth** validado sobre casos reales de PYMEs para medir la calidad de las entrevistas, la tasa de alucinación y la precisión algorítmica.
 
+> **Nota:** el conjunto de datos de evaluación (`core/eval/ground_truth/`) no se distribuye con este repositorio por confidencialidad. Los comandos de esta sección requieren acceso al repositorio privado del grupo. El informe agregado y ya anonimizado sí se incluye, porque es la fuente de las tablas de la memoria.
+
 ### Tests Unitarios del Core (80 tests)
 ```bash
 bun run --cwd core test
@@ -152,7 +162,7 @@ bun run eval -- --module=sipac
 bun run eval -- --module=ahp
 
 # Evaluar un caso de prueba específico del Ground Truth:
-bun run eval -- --cases=G1_mitequiero
+bun run eval -- --cases=G1_empresa_a
 
 # Forzar re-ejecución ignorando el caché:
 bun run eval -- --fresh
