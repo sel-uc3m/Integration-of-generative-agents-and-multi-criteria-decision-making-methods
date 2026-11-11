@@ -65,7 +65,6 @@ El repositorio está organizado como un espacio de trabajo modular (*monorepo*):
 │   └── doc_artifacts.md      # Diccionario de artefactos
 │
 ├── report/                # Memoria académica oficial del TFM (Typst)
-├── paper/                 # Artículo científico (Typst, formato IEEE)
 └── DEPLOYMENT.md          # Guía de despliegue en servidor VPS con PM2 y Ollama
 ```
 
@@ -76,7 +75,7 @@ Para consultar la documentación específica de cada subsistema:
 * 🚀 [Guía de Despliegue en Producción (`DEPLOYMENT.md`)](DEPLOYMENT.md)
 
 > [!NOTE]
-> Este repositorio reúne los entregables del TFM: la plataforma (`core/`, `web/`), la memoria (`report/`) y el artículo científico (`paper/`).
+> Este repositorio reúne los entregables del TFM: la plataforma (`core/`, `web/`) y la memoria (`report/`).
 
 ---
 
